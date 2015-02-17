@@ -1,0 +1,11 @@
+config BR2_PACKAGE_HOST_LLVM
+	bool "host llvm"
+	# http://llvm.org/docs/GettingStarted.html#host-c-toolchain-both-compiler-and-standard-library
+	depends on BR2_HOST_GCC_AT_LEAST_4_7 # needs gcc >= 4.7
+	# http://llvm.org/docs/GettingStarted.html#local-llvm-configuration
+	depends on BR2_aarch64 || BR2_arm || BR2_i386 || BR2_x86_64
+	help
+	  The LLVM Project is a collection of modular and reusable compiler
+	  and toolchain technologies.
+
+	  http://llvm.org
