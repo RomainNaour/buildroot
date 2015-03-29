@@ -1,0 +1,5 @@
+config BR2_PACKAGE_BULLET
+	bool "bullet"
+	depends on BR2_INSTALL_LIBSTDCPP # Check for g++
+	help
+	  Bullet is a Collision Detection and Rigid Body Dynamics Library.
