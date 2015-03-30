@@ -244,6 +244,7 @@ endif
 	source "package/psplash/Config.in"
 	source "package/sawman/Config.in"
 	source "package/sdl/Config.in"
+	source "package/sdl2/Config.in"
 	source "package/sdl_gfx/Config.in"
 	source "package/sdl_image/Config.in"
 	source "package/sdl_mixer/Config.in"
