@@ -1,0 +1,11 @@
+config BR2_PACKAGE_XLIB_LIBXP
+	bool "libXp"
+	select BR2_PACKAGE_XLIB_LIBX11
+	select BR2_PACKAGE_XLIB_LIBXAU
+	select BR2_PACKAGE_XLIB_LIBXEXT
+	select BR2_PACKAGE_XPROTO_PRINTPROTO
+	select BR2_PACKAGE_XUTIL_UTIL_MACROS
+	help
+	  X.Org Print Client Library
+	  libXp provides public APIs to allow client applications to render
+	  to non-display devices.
