@@ -1,0 +1,7 @@
+config BR2_PACKAGE_XPROTO_PRINTPROTO
+	bool "printproto"
+	select BR2_PACKAGE_XUTIL_UTIL_MACROS
+	help
+	  X.Org Print protocol headers
+	  The printproto package provides the protocol headers for the
+	  xlib_libXp package.
