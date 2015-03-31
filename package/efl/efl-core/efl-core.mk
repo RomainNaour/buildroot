@@ -112,6 +112,13 @@ endif
 # There is no alsa support yet in Ecore_Audio.
 # configure will disable alsa support even if alsa-lib is selected.
 
+ifeq ($(BR2_PACKAGE_AVAHI),y)
+EFL_CORE_DEPENDENCIES += avahi
+EFL_CORE_CONF_OPTS += --enable-avahi=yes
+else
+EFL_CORE_CONF_OPTS += --enable-avahi=no
+endif
+
 ifeq ($(BR2_PACKAGE_HARFBUZZ),y)
 EFL_CORE_DEPENDENCIES += harfbuzz
 EFL_CORE_CONF_OPTS += --enable-harfbuzz=yes
