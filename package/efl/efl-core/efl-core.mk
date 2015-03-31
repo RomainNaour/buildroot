@@ -159,6 +159,13 @@ EFL_CORE_CONF_OPTS += --with-crypto=none
 endif
 endif # BR2_PACKAGE_OPENSSL
 
+ifeq ($(BR2_PACKAGE_WAYLAND),y)
+EFL_CORE_DEPENDENCIES += wayland libxkbcommon
+EFL_CORE_CONF_OPTS += --enable-wayland
+else
+EFL_CORE_CONF_OPTS += --disable-wayland
+endif
+
 # image loader: handle only loaders that requires dependencies.
 # All other loaders are builded by default statically.
 ifeq ($(BR2_PACKAGE_EFLCORE_PNG),y)
