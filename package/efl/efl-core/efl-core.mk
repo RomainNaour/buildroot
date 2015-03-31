@@ -108,6 +108,13 @@ else
 EFL_CORE_CONF_OPTS += --disable-pulseaudio
 endif
 
+ifeq ($(BR2_PACKAGE_HARFBUZZ),y)
+EFL_CORE_DEPENDENCIES += harfbuzz
+EFL_CORE_CONF_OPTS += --enable-harfbuzz
+else
+EFL_CORE_CONF_OPTS += --disable-harfbuzz
+endif
+
 ifeq ($(BR2_PACKAGE_TSLIB),y)
 EFL_CORE_DEPENDENCIES += tslib
 EFL_CORE_CONF_OPTS += --enable-tslib
