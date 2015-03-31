@@ -108,6 +108,13 @@ else
 EFL_CORE_CONF_OPTS += --disable-pulseaudio
 endif
 
+ifeq ($(BR2_PACKAGE_AVAHI),y)
+EFL_CORE_DEPENDENCIES += avahi
+EFL_CORE_CONF_OPTS += --enable-avahi
+else
+EFL_CORE_CONF_OPTS += --disable-avahi
+endif
+
 ifeq ($(BR2_PACKAGE_HARFBUZZ),y)
 EFL_CORE_DEPENDENCIES += harfbuzz
 EFL_CORE_CONF_OPTS += --enable-harfbuzz
