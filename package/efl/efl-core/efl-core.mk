@@ -109,6 +109,11 @@ else
 EFL_CORE_CONF_OPTS += --disable-pulseaudio
 endif
 
+# The configure script check for GNU gettext in libc or libintl (uClibc)
+ifeq ($(BR2_NEEDS_GETTEXT_IF_LOCALE),y)
+EFL_CORE_DEPENDENCIES += gettext
+endif
+
 # There is no alsa support yet in Ecore_Audio.
 # configure will disable alsa support even if alsa-lib is selected.
 
