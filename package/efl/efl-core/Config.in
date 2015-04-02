@@ -3,6 +3,7 @@ config BR2_PACKAGE_EFLCORE
 	depends on BR2_TOOLCHAIN_HAS_THREADS
 	depends on BR2_USE_WCHAR
 	depends on BR2_PACKAGE_HAS_UDEV # libudev
+	depends on BR2_INSTALL_LIBSTDCPP
 	select BR2_PACKAGE_DBUS
 	select BR2_PACKAGE_FREETYPE
 	select BR2_PACKAGE_LUA # Evas lua 5.1 or 5.2
@@ -57,5 +58,5 @@ config BR2_PACKAGE_EFLCORE_TIFF
 
 endif # BR2_PACKAGE_EFLCORE
 
-comment "efl-core needs a toolchain w/ threads, wchar"
-	depends on !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR
+comment "efl-core needs a toolchain w/ threads, wchar, C++"
+	depends on !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR || !BR2_INSTALL_LIBSTDCPP
