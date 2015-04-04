@@ -60,6 +60,11 @@ config BR2_PACKAGE_EFLCORE_TIFF
 	help
 	  This enables the loader code that loads tiff files.
 
+config BR2_PACKAGE_EFLCORE_WEBP
+	bool "libevas webp image loader"
+	help
+	  This enables the loader code that loads images using WebP.
+
 endif # BR2_PACKAGE_EFLCORE
 
 comment "efl-core needs a toolchain w/ threads, wchar, C++"
