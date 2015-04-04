@@ -202,6 +202,13 @@ else
 EFL_CORE_CONF_OPTS += --enable-image-loader-tiff=no
 endif
 
+ifeq ($(BR2_PACKAGE_EFLCORE_WEBP),y)
+EFL_CORE_CONF_OPTS += --enable-image-loader-webp=yes
+EFL_CORE_DEPENDENCIES += webp
+else
+EFL_CORE_CONF_OPTS += --enable-image-loader-webp=no
+endif
+
 $(eval $(autotools-package))
 
 ################################################################################
