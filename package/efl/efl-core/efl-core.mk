@@ -4,8 +4,7 @@
 #
 ################################################################################
 
-# hardcode the version here since the bump to 1.13.2 is not complete in Buildroot
-EFL_CORE_VERSION = 1.13.2
+EFL_CORE_VERSION = $(EFL_VERSION)
 EFL_CORE_SOURCE = efl-$(EFL_CORE_VERSION).tar.xz
 EFL_CORE_SITE = http://download.enlightenment.org/rel/libs/efl/
 EFL_CORE_LICENSE = BSD-2c, LGPLv2.1+, GPLv2+
