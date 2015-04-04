@@ -4,24 +4,16 @@
 #
 ################################################################################
 
-ENLIGHTENMENT_VERSION = 0.17.6
-ENLIGHTENMENT_SITE = http://download.enlightenment.org/releases
+ENLIGHTENMENT_VERSION = 0.19.4
+ENLIGHTENMENT_SITE = http://download.enlightenment.org/rel/apps/enlightenment/
 ENLIGHTENMENT_LICENSE = BSD-2c
 ENLIGHTENMENT_LICENSE_FILES = COPYING
 
 ENLIGHTENMENT_DEPENDENCIES = 	\
 	host-pkgconf 		\
-	libecore 		\
-	libeet 			\
-	libeina 		\
-	libevas 		\
+	efl-core 		\
 	libevas-generic-loaders \
-	libedje 		\
-	libefreet 		\
 	libedbus 		\
-	libeio 			\
-	host-libedje 		\
-	host-libeet		\
 	xcb-util-keysyms
 
 ENLIGHTENMENT_CONF_OPTS = \
