@@ -25,6 +25,7 @@ config BR2_PACKAGE_EFLCORE_RECOMMENDED_CONFIG
 	select BR2_PACKAGE_PULSEAUDIO
 	select BR2_PACKAGE_UTIL_LINUX
 	select BR2_PACKAGE_UTIL_LINUX_LIBMOUNT
+	select BR2_PACKAGE_UTIL_LINUX_LIBBLKID
 	default y
 	help
 	  Avoid to use untested or not recommanded configurations, otherwise we
