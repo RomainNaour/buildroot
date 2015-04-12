@@ -36,6 +36,47 @@ comment "libecore video support"
 config BR2_PACKAGE_EFLCORE_FB
 	bool "libecore framebuffer support"
 
+config BR2_PACKAGE_EFLCORE_X
+	bool "libecore X support"
+	depends on BR2_PACKAGE_XORG7
+	select BR2_PACKAGE_XLIB_LIBX11
+	select BR2_PACKAGE_XLIB_LIBXEXT
+
+if BR2_PACKAGE_EFLCORE_X
+
+choice
+	prompt "select libecore XLIB/XCB support"
+
+config BR2_PACKAGE_EFLCORE_X_XLIB
+	bool "libecore XLIB support"
+	select BR2_PACKAGE_XLIB_LIBXCOMPOSITE
+	select BR2_PACKAGE_XLIB_LIBXCURSOR
+	select BR2_PACKAGE_XLIB_LIBXDAMAGE
+	select BR2_PACKAGE_XLIB_LIBXINERAMA
+	select BR2_PACKAGE_XLIB_LIBXP
+	select BR2_PACKAGE_XLIB_LIBXRANDR
+	select BR2_PACKAGE_XLIB_LIBXRENDER
+	select BR2_PACKAGE_XLIB_LIBXSCRNSAVER
+	select BR2_PACKAGE_XLIB_LIBXTST
+	select BR2_PACKAGE_XPROTO_GLPROTO
+
+config BR2_PACKAGE_EFLCORE_X_XCB
+	bool "libecore XCB support"
+	depends on !BR2_PACKAGE_EFLCORE_RECOMMENDED_CONFIG
+	select BR2_PACKAGE_LIBXCB
+	select BR2_PACKAGE_XCB_UTIL_IMAGE # xcb-image.pc
+	select BR2_PACKAGE_XCB_UTIL_KEYSYMS # xcb-keysyms.pc
+	select BR2_PACKAGE_XCB_UTIL_RENDERUTIL # xcb-renderutil.pc
+	select BR2_PACKAGE_XCB_UTIL_WM # xcb-icccm.pc
+	select BR2_PACKAGE_XLIB_LIBX11
+
+comment "for libecore XCB support disable recommanded configurations"
+	depends on BR2_PACKAGE_EFLCORE_RECOMMENDED_CONFIG
+
+endchoice
+
+endif # BR2_PACKAGE_EFLCORE_X
+
 comment "libevas loaders"
 
 config BR2_PACKAGE_EFLCORE_PNG
