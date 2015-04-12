@@ -201,6 +201,13 @@ else
 EFL_CORE_CONF_OPTS += --enable-image-loader-gif=no
 endif
 
+ifeq ($(BR2_PACKAGE_EFLCORE_JP2K),y)
+EFL_CORE_CONF_OPTS += --enable-image-loader-jp2k=yes
+EFL_CORE_DEPENDENCIES += openjpeg
+else
+EFL_CORE_CONF_OPTS += --enable-image-loader-jp2k=no
+endif
+
 ifeq ($(BR2_PACKAGE_EFLCORE_TIFF),y)
 EFL_CORE_CONF_OPTS += --enable-image-loader-tiff=yes
 EFL_CORE_DEPENDENCIES += tiff
