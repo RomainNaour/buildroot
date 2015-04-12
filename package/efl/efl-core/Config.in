@@ -31,6 +31,11 @@ config BR2_PACKAGE_EFLCORE_RECOMMENDED_CONFIG
 	  Avoid to use untested or not recommanded configurations, otherwise we
 	  need to add a very long and obscure option to start the build.
 
+comment "libecore video support"
+
+config BR2_PACKAGE_EFLCORE_FB
+	bool "libecore framebuffer support"
+
 comment "libevas loaders"
 
 config BR2_PACKAGE_EFLCORE_PNG
