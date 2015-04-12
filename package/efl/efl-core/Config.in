@@ -42,6 +42,13 @@ config BR2_PACKAGE_EFLCORE_X
 	select BR2_PACKAGE_XLIB_LIBX11
 	select BR2_PACKAGE_XLIB_LIBXEXT
 
+config BR2_PACKAGE_EFLCORE_SDL2
+	bool "libevas SDL2 support"
+	depends on !BR2_PACKAGE_EFLCORE_X_XLIB_GLX_ES
+	select BR2_PACKAGE_SDL2
+
+comment "libecore SDL support"
+
 if BR2_PACKAGE_EFLCORE_X
 
 choice
