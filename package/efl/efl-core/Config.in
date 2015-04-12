@@ -65,6 +65,12 @@ config BR2_PACKAGE_EFLCORE_TIFF
 	help
 	  This enables the loader code that loads tiff files.
 
+config BR2_PACKAGE_EFLCORE_JP2K
+	bool "libevas jp2k loader"
+	select BR2_PACKAGE_OPENJPEG
+	help
+	  This enables the loader code that loads jp2k files.
+
 config BR2_PACKAGE_EFLCORE_WEBP
 	bool "libevas webp image loader"
 	help
