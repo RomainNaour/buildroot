@@ -179,13 +179,27 @@ EFL_CORE_CONF_OPTS += --enable-fb=no
 endif
 
 ifeq ($(BR2_PACKAGE_EFLCORE_X),y)
-EFL_CORE_CONF_OPTS += --with-x=yes --with-opengl=none
+EFL_CORE_CONF_OPTS += --with-x=yes
 EFL_CORE_DEPENDENCIES += \
 	xlib_libX11 \
 	xlib_libXext
 else
 EFL_CORE_CONF_OPTS += --with-x=no \
 	--with-x11=none
+endif
+
+ifeq ($(BR2_PACKAGE_EFLCORE_X_XLIB_GLX_FULL),y)
+EFL_CORE_CONF_OPTS += --with-opengl=full
+EFL_CORE_DEPENDENCIES += libgl
+endif
+
+ifeq ($(BR2_PACKAGE_EFLCORE_X_XLIB_GLX_ES),y)
+EFL_CORE_CONF_OPTS += --with-opengl=es
+EFL_CORE_DEPENDENCIES += libgles
+endif
+
+ifeq ($(BR2_PACKAGE_EFLCORE_X_XLIB_GLX_NONE),y)
+EFL_CORE_CONF_OPTS += --with-opengl=none
 endif
 
 ifeq ($(BR2_PACKAGE_EFLCORE_X_XLIB),y)
