@@ -177,6 +177,13 @@ else
 EFL_CORE_CONF_OPTS += --enable-fb=no
 endif
 
+ifeq ($(BR2_PACKAGE_EFLCORE_SDL2),y)
+EFL_CORE_CONF_OPTS += --enable-sdl=yes
+EFL_CORE_DEPENDENCIES += sdl2
+else
+EFL_CORE_CONF_OPTS += --enable-sdl=no
+endif
+
 ifeq ($(BR2_PACKAGE_EFLCORE_X),y)
 EFL_CORE_CONF_OPTS += --with-x=yes
 EFL_CORE_DEPENDENCIES += \
