@@ -14,6 +14,11 @@ EFL_CORE_LICENSE_FILES = COPYING
 
 EFL_CORE_INSTALL_STAGING = YES
 
+# configure.ac is patched by 0001-autotools-add-disable-libeeze.patch
+EFL_CORE_AUTORECONF = YES
+# gettext infrastructure mismatch when during autoreconf
+EFL_CORE_GETTEXTIZE = YES
+
 EFL_CORE_DEPENDENCIES = host-pkgconf host-efl-core dbus freetype jpeg libcurl \
 	lua udev zlib
 
