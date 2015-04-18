@@ -4,9 +4,7 @@
 #
 ################################################################################
 
-# hardcode the version here since the bump to 1.14.0-beta2 is not complete in
-# Buildroot.
-LIBELEMENTARY_VERSION = 1.14.0-beta2
+LIBELEMENTARY_VERSION = $(EFL_VERSION)
 LIBELEMENTARY_SOURCE = elementary-$(LIBELEMENTARY_VERSION).tar.xz
 LIBELEMENTARY_SITE = http://download.enlightenment.org/rel/libs/elementary/
 LIBELEMENTARY_LICENSE = LGPLv2.1

@@ -4,9 +4,7 @@
 #
 ################################################################################
 
-# hardcode the version here since the bump to 1.14.0-beta2 is not complete in
-# Buildroot.
-LIBEVAS_GENERIC_LOADERS_VERSION = 1.14.0-beta2
+LIBEVAS_GENERIC_LOADERS_VERSION = $(EFL_VERSION)
 LIBEVAS_GENERIC_LOADERS_SOURCE = evas_generic_loaders-$(LIBEVAS_GENERIC_LOADERS_VERSION).tar.xz
 LIBEVAS_GENERIC_LOADERS_SITE = http://download.enlightenment.org/rel/libs/evas_generic_loaders/
 LIBEVAS_GENERIC_LOADERS_LICENSE = GPLv2
