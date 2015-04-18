@@ -45,7 +45,7 @@ config BR2_PACKAGE_EFLCORE_X
 config BR2_PACKAGE_EFLCORE_SDL2
 	bool "libevas SDL2 support"
 	depends on !BR2_PACKAGE_EFLCORE_X_XLIB_GLX_ES
-	select BR2_PACKAGE_SDL2
+	select BR2_PACKAGE_SDL2 # configure check for sdl2 headers
 
 comment "libecore SDL support"
 
@@ -90,6 +90,9 @@ choice
 config BR2_PACKAGE_EFLCORE_X_XLIB_GLX_FULL
 	bool "libevas OpenGL full support"
 	depends on BR2_PACKAGE_HAS_LIBGL
+	select BR2_PACKAGE_SDL if BR2_PACKAGE_EFLCORE_SDL2 # needed for sdl_gfx
+	select BR2_PACKAGE_SDL_GFX if BR2_PACKAGE_EFLCORE_SDL2 # evas include sdl header in ecore_evas_sdl.c
+	select BR2_PACKAGE_LIBGLU if BR2_PACKAGE_EFLCORE_SDL2 # evas depends on libglu header in evas_engine.c
 
 comment "libevas OpenGLES support needs libgl"
 	depends on !BR2_PACKAGE_HAS_LIBGL

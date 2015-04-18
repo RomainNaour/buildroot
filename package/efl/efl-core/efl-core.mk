@@ -200,6 +200,10 @@ EFL_CORE_CONF_OPTS += --with-opengl=full
 EFL_CORE_DEPENDENCIES += libgl
 endif
 
+ifeq ($(BR2_PACKAGE_EFLCORE_X_XLIB_GLX_FULL)$(BR2_PACKAGE_EFLCORE_SDL2),yy)
+EFL_CORE_DEPENDENCIES += sdl_gfx libglu
+endif
+
 ifeq ($(BR2_PACKAGE_EFLCORE_X_XLIB_GLX_ES),y)
 EFL_CORE_CONF_OPTS += --with-opengl=es
 EFL_CORE_DEPENDENCIES += libgles
