@@ -1,0 +1,157 @@
+From a26644ad8464599ccff215d3290f78acc06cba61 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@openwide.fr>
+Date: Sat, 18 Apr 2015 11:57:00 +0200
+Subject: [PATCH] pkg-config: prefix eolian_flags with sysrootdir when
+ crosscompiling
+
+Otherwise, the elementary build is brocken during crosscompiling since
+"pkg-config --variable=eolian_flags eo evas edje ecore efl" return paths
+to the host's include (/usr/share/eolian/include)
+
+Signed-off-by: Romain Naour <romain.naour@openwide.fr>
+---
+ pc/ecore-cxx.pc.in | 2 +-
+ pc/ecore.pc.in     | 2 +-
+ pc/edje-cxx.pc.in  | 2 +-
+ pc/edje.pc.in      | 2 +-
+ pc/efl-cxx.pc.in   | 2 +-
+ pc/efl.pc.in       | 2 +-
+ pc/eo-cxx.pc.in    | 2 +-
+ pc/eo.pc.in        | 2 +-
+ pc/evas-cxx.pc.in  | 2 +-
+ pc/evas.pc.in      | 2 +-
+ 10 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/pc/ecore-cxx.pc.in b/pc/ecore-cxx.pc.in
+index 9bfd2f9..e24de48 100644
+--- a/pc/ecore-cxx.pc.in
++++ b/pc/ecore-cxx.pc.in
+@@ -7,7 +7,7 @@ module_arch=@MODULE_ARCH@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/ecore-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/ecore-@VMAJ@
+ 
+ Name: ecore C++ API
+ Description: Ecore event abstraction library C++ API
+diff --git a/pc/ecore.pc.in b/pc/ecore.pc.in
+index 1647f57..156bf46 100644
+--- a/pc/ecore.pc.in
++++ b/pc/ecore.pc.in
+@@ -7,7 +7,7 @@ module_arch=@MODULE_ARCH@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/ecore-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/ecore-@VMAJ@
+ 
+ Name: ecore
+ Description: Ecore event abstraction library
+diff --git a/pc/edje-cxx.pc.in b/pc/edje-cxx.pc.in
+index 6e19ddd..0a22a9d 100644
+--- a/pc/edje-cxx.pc.in
++++ b/pc/edje-cxx.pc.in
+@@ -12,7 +12,7 @@ vmic=@VMIC@
+ multisense=@want_multisense@
+ physics=@want_physics@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/edje-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/edje-@VMAJ@
+ 
+ Name: edje C++ API
+ Description: Enlightened graphical design and layout engine C++ API.
+diff --git a/pc/edje.pc.in b/pc/edje.pc.in
+index 8c0c33d..a37f10c 100644
+--- a/pc/edje.pc.in
++++ b/pc/edje.pc.in
+@@ -12,7 +12,7 @@ vmic=@VMIC@
+ multisense=@want_multisense@
+ physics=@want_physics@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/edje-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/edje-@VMAJ@
+ 
+ Name: edje
+ Description: Enlightened graphical design and layout engine.
+diff --git a/pc/efl-cxx.pc.in b/pc/efl-cxx.pc.in
+index 8f8fa90..7100fcf 100644
+--- a/pc/efl-cxx.pc.in
++++ b/pc/efl-cxx.pc.in
+@@ -5,7 +5,7 @@ includedir=@includedir@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/efl-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/efl-@VMAJ@
+ 
+ Name: EFL++
+ Description: EFL's C++ bindings
+diff --git a/pc/efl.pc.in b/pc/efl.pc.in
+index c422a51..9469ca2 100644
+--- a/pc/efl.pc.in
++++ b/pc/efl.pc.in
+@@ -5,7 +5,7 @@ includedir=@includedir@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/efl-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/efl-@VMAJ@
+ 
+ Name: Efl
+ Description: EFL's general purpose library
+diff --git a/pc/eo-cxx.pc.in b/pc/eo-cxx.pc.in
+index 22d680d..22c512c 100644
+--- a/pc/eo-cxx.pc.in
++++ b/pc/eo-cxx.pc.in
+@@ -5,7 +5,7 @@ includedir=@includedir@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/eo-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/eo-@VMAJ@
+ 
+ Name: Eo C++
+ Description: C++ bindings for EFL's generic object system.
+diff --git a/pc/eo.pc.in b/pc/eo.pc.in
+index e4781c8..16d8c61 100644
+--- a/pc/eo.pc.in
++++ b/pc/eo.pc.in
+@@ -5,7 +5,7 @@ includedir=@includedir@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/eo-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/eo-@VMAJ@
+ 
+ Name: Eo
+ Description: EFL's generic object system library.
+diff --git a/pc/evas-cxx.pc.in b/pc/evas-cxx.pc.in
+index 2953c4e..36d8da1 100644
+--- a/pc/evas-cxx.pc.in
++++ b/pc/evas-cxx.pc.in
+@@ -5,7 +5,7 @@ includedir=@includedir@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/evas-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/evas-@VMAJ@
+ 
+ Name: evas
+ Description: Evas C++ bindings
+diff --git a/pc/evas.pc.in b/pc/evas.pc.in
+index eca1f0c..2839039 100644
+--- a/pc/evas.pc.in
++++ b/pc/evas.pc.in
+@@ -5,7 +5,7 @@ includedir=@includedir@
+ datarootdir=@datarootdir@
+ datadir=@datadir@
+ eoincludedir=@datadir@/eolian/include
+-eolian_flags=-I${eoincludedir}/evas-@VMAJ@
++eolian_flags=-I${pc_sysrootdir}/${eoincludedir}/evas-@VMAJ@
+ 
+ Name: evas
+ Description: Evas canvas display library
+-- 
+1.9.3
+
