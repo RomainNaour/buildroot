@@ -12,6 +12,9 @@ EFL_CORE_LICENSE_FILES = COPYING
 
 EFL_CORE_INSTALL_STAGING = YES
 
+EFL_CORE_AUTORECONF = YES
+EFL_CORE_GETTEXTIZE = YES
+
 EFL_CORE_DEPENDENCIES = host-pkgconf host-efl-core dbus freetype jpeg libcurl \
 	lua udev zlib
 
