@@ -187,7 +187,10 @@ EFL_CORE_CONF_OPTS += --enable-sdl=no
 endif
 
 ifeq ($(BR2_PACKAGE_EFLCORE_X),y)
-EFL_CORE_CONF_OPTS += --with-x=yes
+EFL_CORE_CONF_OPTS += --with-x=$(STAGING_DIR) \
+	--x-includes=$(STAGING_DIR)/usr/include \
+	--x-libraries=$(STAGING_DIR)/usr/lib
+
 EFL_CORE_DEPENDENCIES += \
 	xlib_libX11 \
 	xlib_libXext
