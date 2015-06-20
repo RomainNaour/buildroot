@@ -242,7 +242,6 @@ endif
 	source "package/imagemagick/Config.in"
 	source "package/libecore/Config.in"
 	source "package/libeet/Config.in"
-	source "package/libefreet/Config.in"
 	source "package/libeina/Config.in"
 	source "package/libedbus/Config.in"
 	source "package/libelementary/Config.in"
