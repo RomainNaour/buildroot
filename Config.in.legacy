@@ -107,6 +107,180 @@ endif
 ###############################################################################
 comment "Legacy options removed in 2015.08"
 
+config BR2_PACKAGE_LIBEVAS
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_SCALE_SAMPLE
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_SCALE_SMOOTH
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_SMALL_DITHERING
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_LINE_DITHERING
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_NO_DITHERING
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_BUFFER
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_DIRECTFB
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_FB
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_SDL
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_SDL_GL
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_X11
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_X11_GLX
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_XCB
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_XCB_GLX
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_GLES_SGX
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_GLES_S3C6410
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_PNG
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_JPEG
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_GIF
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_PMAPS
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_TIFF
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_XPM
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_EET
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEVAS_EET_FONT
+	bool "libevas package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libevas package has been removed with the efl bump to 1.14.
+
 config BR2_PACKAGE_LIBECORE
 	bool "libecore package has been removed"
 	select BR2_LEGACY
