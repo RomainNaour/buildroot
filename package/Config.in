@@ -249,7 +249,6 @@ endif
 	source "package/libedbus/Config.in"
 	source "package/libelementary/Config.in"
 	source "package/libembryo/Config.in"
-	source "package/libethumb/Config.in"
 	source "package/libevas/Config.in"
 	source "package/libevas-generic-loaders/Config.in"
 	source "package/linux-fusion/Config.in"
