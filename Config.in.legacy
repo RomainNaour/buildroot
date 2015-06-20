@@ -107,6 +107,19 @@ endif
 ###############################################################################
 comment "Legacy options removed in 2015.08"
 
+config BR2_PACKAGE_LIBEDBUS
+	bool "libedbus package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libedbus package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEDBUS_BLUEZ
+	bool "libedbus: bluez option has been removed"
+	select BR2_LEGACY
+	help
+	  The libedbus package has been removed with the efl bump to 1.14.
+
 config BR2_PACKAGE_LIBEFREET
 	bool "libefreet package has been removed"
 	select BR2_LEGACY
