@@ -107,6 +107,19 @@ endif
 ###############################################################################
 comment "Legacy options removed in 2015.08"
 
+config BR2_PACKAGE_LIBEDJE
+	bool "libedje package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libedje package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBEDJE_CC
+	bool "libedje: build edje_cc option has been removed"
+	select BR2_LEGACY
+	help
+	  The libedje package has been removed with the efl bump to 1.14.
+
 config BR2_PACKAGE_LIBETHUMB
 	bool "libethumb package has been removed"
 	select BR2_LEGACY
