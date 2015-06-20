@@ -107,6 +107,52 @@ endif
 ###############################################################################
 comment "Legacy options removed in 2015.08"
 
+config BR2_PACKAGE_LIBECORE
+	bool "libecore package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL
+	help
+	  The libecore package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBECORE_DIRECTFB
+	bool "libecore package has been removed"
+	select BR2_LEGACY
+	help
+	  The libecore package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBECORE_FB
+	bool "libecore package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL_FB
+	help
+	  The libecore package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBECORE_SDL
+	bool "libecore package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL_SDL2
+	help
+	  The libecore package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBECORE_X
+	bool "libecore package has been removed"
+	select BR2_LEGACY
+	select BR2_PACKAGE_EFL_X
+	help
+	  The libecore package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBECORE_X_XCB
+	bool "libecore package has been removed"
+	select BR2_LEGACY
+	help
+	  The libecore package has been removed with the efl bump to 1.14.
+
+config BR2_PACKAGE_LIBECORE_EVAS
+	bool "libecore package has been removed"
+	select BR2_LEGACY
+	help
+	  The libecore package has been removed with the efl bump to 1.14.
+
 config BR2_PACKAGE_LIBEDBUS
 	bool "libedbus package has been removed"
 	select BR2_LEGACY
