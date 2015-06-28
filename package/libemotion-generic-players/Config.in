@@ -1,0 +1,20 @@
+config BR2_PACKAGE_LIBEMOTION_GENERIC_PLAYERS
+	bool "libemotion generic players"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_VLC # needs libvlc
+	depends on BR2_INSTALL_LIBSTDCPP # libefl vlc
+	depends on BR2_PACKAGE_HAS_UDEV # libefl -> libudev
+	depends on BR2_TOOLCHAIN_USES_GLIBC # vlc
+	depends on BR2_TOOLCHAIN_HEADERS_AT_LEAST_3_7 # vlc
+	depends on BR2_USE_MMU # libefl
+	depends on !BR2_STATIC_LIBS # libefl
+	depends on BR2_USE_WCHAR # libefl
+	help
+	  A media object library for Evas and Ecore.
+
+	  https://www.enlightenment.org
+	  https://docs.enlightenment.org/stable/efl/emotion_main.html
+
+comment "libemotion generic players needs udev /dev management and a (e)glibc toolchain w/ C++, wchar"
+	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_USES_GLIBC || BR2_STATIC_LIBS || !BR2_USE_WCHAR
+	depends on BR2_USE_MMU
