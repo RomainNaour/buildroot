@@ -1,0 +1,14 @@
+config BR2_PACKAGE_EMPC
+	bool "empc"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_LIBMPDCLIENT
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_TOOLCHAIN_HAS_THREADS # efl
+	depends on BR2_USE_MMU # efl
+	depends on BR2_USE_WCHAR # efl
+	help
+	  EMPC is a client for MPD written using EFL.
+
+comment "empc needs a toolchain w/ C++, threads, wchar"
+	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR
