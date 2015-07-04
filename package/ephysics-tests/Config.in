@@ -1,0 +1,20 @@
+config BR2_PACKAGE_EPHYSICS_TEST
+	bool "ephysics tests"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_BULLET
+	select BR2_PACKAGE_LIBELEMENTARY
+	depends on BR2_INSTALL_LIBSTDCPP # efl + bullet
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_USE_MMU # efl
+	depends on !BR2_STATIC_LIBS # efl
+	depends on BR2_USE_WCHAR # efl
+	help
+	  EPhysics Tests provides many tests for ephysics. It consists of
+	  three binaries:
+	  * ephysics_test (a test suite)
+	  * ephysics_sandbox (util for testing physics attributes and actions)
+	  * ephysics_logo (example of fancy program logo using ephysics)
+
+comment "ephysics tests needs udev /dev management and a toolchain w/ C++, dynamic library, wchar"
+	depends on !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP || BR2_STATIC_LIBS || !BR2_USE_WCHAR
+	depends on BR2_USE_MMU
