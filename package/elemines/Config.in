@@ -1,0 +1,18 @@
+config BR2_PACKAGE_ELEMINES
+	bool "elemines"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_LIBELEMENTARY
+	select BR2_PACKAGE_LIBETROPHY
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_USE_MMU # efl
+	depends on !BR2_STATIC_LIBS # efl
+	depends on BR2_USE_WCHAR # efl
+	help
+	  Elemines is an EFL minesweeper clone.
+
+	  http://elemines.sourceforge.net/
+
+comment "elemines needs udev /dev management and a toolchain w/ C++, dynamic library, wchar"
+	depends on !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP || BR2_STATIC_LIBS || !BR2_USE_WCHAR
+	depends on BR2_USE_MMU
