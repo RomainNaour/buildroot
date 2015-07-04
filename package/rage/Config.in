@@ -1,0 +1,6 @@
+config BR2_PACKAGE_RAGE
+	bool "rage"
+	depends on BR2_PACKAGE_EFL
+	help
+	  Rage is a Video + Audio player along the lines of mplayer.
+	  It's based on ELF libraries.
