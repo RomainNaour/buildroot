@@ -1448,6 +1448,7 @@ endif
 endmenu
 
 menu "Text editors and viewers"
+	source "package/ecrire/Config.in"
 	source "package/ed/Config.in"
 	source "package/joe/Config.in"
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
