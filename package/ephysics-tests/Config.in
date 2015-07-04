@@ -1,0 +1,15 @@
+config BR2_PACKAGE_EPHYSICS_TEST
+	bool "ephysics tests"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_BULLET
+	select BR2_PACKAGE_ELEMENTARY
+	depends on BR2_INSTALL_LIBSTDCPP # bullet
+	help
+	  EPhysics Tests provides many tests for ephysics. It consists of
+	  three binaries:
+	  * ephysics_test (a test suite)
+	  * ephysics_sandbox (util for testing physics attributes and actions)
+	  * ephysics_logo (example of fancy program logo using ephysics)
+
+comment "ephysics tests needs toolchain w/ C++"
+	depends on !BR2_INSTALL_LIBSTDCPP
