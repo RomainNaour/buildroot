@@ -1,0 +1,17 @@
+config BR2_PACKAGE_E_CHO
+	bool "echo (game)"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_LIBCANBERRA
+	select BR2_PACKAGE_LIBETROPHY
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_TOOLCHAIN_HAS_THREADS # efl
+	depends on BR2_USE_MMU # efl
+	depends on BR2_USE_WCHAR # efl
+	depends on !BR2_STATIC_LIBS # libetrophy -> libelementary
+	help
+	  Echo is a game based on the classic game Simon Says,  written
+	  using Enlightenment Foundation Libraries (EFL).
+
+comment "echo (game) needs a toolchain w/ C++, dynamic library, threads, wchar"
+	depends on !BR2_INSTALL_LIBSTDCPP || BR2_STATIC_LIBS || !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR
