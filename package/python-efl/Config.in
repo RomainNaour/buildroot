@@ -1,0 +1,18 @@
+config BR2_PACKAGE_PYTHON_EFL
+	bool "python-efl"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_DBUS_PYTHON
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_TOOLCHAIN_HAS_THREADS # efl + dbus-python -> glib2
+	depends on BR2_PACKAGE_PYTHON || BR2_PACKAGE_PYTHON3
+	depends on BR2_USE_MMU # efl
+	depends on BR2_USE_WCHAR # efl + dbus-python -> glib2
+	help
+	  Python-efl are the python bindings for the whole EFL stack (eo,
+	  evas, ecore, edje, emotion, ethumb and elementary)
+
+	  https://www.enlightenment.org/
+
+comment "python-efl needs a toolchain w/ C++, threads, wchar"
+	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR
