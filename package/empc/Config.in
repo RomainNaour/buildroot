@@ -1,0 +1,7 @@
+config BR2_PACKAGE_EMPC
+	bool "empc"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_ELEMENTARY
+	select BR2_PACKAGE_LIBMPDCLIENT
+	help
+	  EMPC is a client for MPD written using EFL.
