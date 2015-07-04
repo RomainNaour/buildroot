@@ -1,0 +1,6 @@
+config BR2_PACKAGE_ECRIRE
+	bool "ecrire"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_ELEMENTARY
+	help
+	  Ecrire is a simple text editor based on EPL libraries.
