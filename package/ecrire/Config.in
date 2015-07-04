@@ -1,0 +1,13 @@
+config BR2_PACKAGE_ECRIRE
+	bool "ecrire"
+	select BR2_PACKAGE_EFL
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_TOOLCHAIN_USES_GLIBC # efl
+	depends on BR2_USE_MMU # efl
+	help
+	  Ecrire is a simple text editor based on EPL libraries.
+
+comment "ecrire needs udev /dev management and a (e)glibc toolchain w/ C++"
+	depends on !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_USES_GLIBC
+	depends on BR2_USE_MMU
