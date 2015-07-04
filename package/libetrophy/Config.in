@@ -1,0 +1,8 @@
+config BR2_PACKAGE_LIBETROPHY
+	bool "libetrophy"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_ELEMENTARY
+	help
+	  Etrophy is a library that manages scores, trophies and
+	  unlockables. It will store them and provide views to display
+	  them. Could be used by games based on EFL.
