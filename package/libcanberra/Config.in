@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LIBCANBERRA
+	bool "libcanberra"
+	select BR2_PACKAGE_LIBVORBIS
+	help
+	  libcanberra defines a simple abstract interface for playing event sounds.
+
+	  http://0pointer.de/lennart/projects/libcanberra/
