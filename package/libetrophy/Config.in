@@ -1,0 +1,17 @@
+config BR2_PACKAGE_LIBETROPHY
+	bool "libetrophy"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_LIBELEMENTARY
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_USE_MMU # efl
+	depends on !BR2_STATIC_LIBS # efl
+	depends on BR2_USE_WCHAR # efl
+	help
+	  Etrophy is a library that manages scores, trophies and
+	  unlockables. It will store them and provide views to display
+	  them. Could be used by games based on EFL.
+
+comment "libetrophy needs udev /dev management and a toolchain w/ C++, dynamic library, wchar"
+	depends on !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP || BR2_STATIC_LIBS || !BR2_USE_WCHAR
+	depends on BR2_USE_MMU
