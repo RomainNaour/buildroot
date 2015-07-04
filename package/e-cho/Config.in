@@ -1,0 +1,9 @@
+config BR2_PACKAGE_E_CHO
+	bool "echo (game)"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_ELEMENTARY
+	select BR2_PACKAGE_LIBCANBERRA
+	select BR2_PACKAGE_LIBETROPHY
+	help
+	  Echo is a game based on the classic game Simon Says,  written
+	  using Enlightenment Foundation Libraries (EFL).
