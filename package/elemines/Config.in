@@ -1,0 +1,9 @@
+config BR2_PACKAGE_ELEMINES
+	bool "elemines"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_ELEMENTARY
+	select BR2_PACKAGE_LIBETROPHY
+	help
+	  Elemines is an EFL minesweeper clone.
+
+	  http://elemines.sourceforge.net/
