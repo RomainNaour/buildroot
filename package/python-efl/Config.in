@@ -1,0 +1,18 @@
+config BR2_PACKAGE_PYTHON_EFL
+	bool "python-efl"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_DBUS_PYTHON
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_PACKAGE_PYTHON || BR2_PACKAGE_PYTHON3
+	depends on BR2_TOOLCHAIN_USES_GLIBC # efl
+	depends on BR2_USE_MMU # efl
+	help
+	  Python-efl are the python bindings for the whole EFL stack (eo,
+	  evas, ecore, edje, emotion, ethumb and elementary)
+
+	  https://www.enlightenment.org/
+
+comment "python-efl needs udev /dev management and a (e)glibc toolchain w/ C++"
+	depends on !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_USES_GLIBC
+	depends on BR2_USE_MMU
