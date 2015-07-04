@@ -1,0 +1,17 @@
+config BR2_PACKAGE_TERMINOLOGY
+	bool "terminology"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_LIBELEMENTARY
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_TOOLCHAIN_HAS_THREADS # efl
+	depends on BR2_USE_MMU # efl
+	depends on BR2_USE_WCHAR # efl
+	depends on !BR2_STATIC_LIBS # libelementary
+	help
+	  Terminology is an EFL terminal emulator with some extra bells
+	  and whistles.
+
+comment "terminology needs a toolchain w/ C++, threads, wchar"
+	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR
+
