@@ -1,0 +1,9 @@
+config BR2_PACKAGE_ECONNMAN
+	bool "econnman"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_ELEMENTARY
+	select BR2_PACKAGE_DBUS_PYTHON
+	depends on BR2_PACKAGE_PYTHON || BR2_PACKAGE_PYTHON3 # dbus-python
+	help
+	  ConnMan User Interface in EFL
+
