@@ -1,0 +1,14 @@
+config BR2_PACKAGE_RAGE
+	bool "rage"
+	select BR2_PACKAGE_EFL
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_TOOLCHAIN_USES_GLIBC # efl
+	depends on BR2_USE_MMU # efl
+	help
+	  Rage is a Video + Audio player along the lines of mplayer.
+	  It's based on ELF libraries.
+
+comment "rage needs udev /dev management and a (e)glibc toolchain w/ C++"
+	depends on !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_USES_GLIBC
+	depends on BR2_USE_MMU
