@@ -177,8 +177,7 @@ endif
 ifeq ($(BR2_PACKAGE_EFL_X),y)
 EFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
 	--x-includes=$(STAGING_DIR)/usr/include \
-	--x-libraries=$(STAGING_DIR)/usr/lib \
-	--with-opengl=none
+	--x-libraries=$(STAGING_DIR)/usr/lib
 
 EFL_DEPENDENCIES += \
 	xlib_libX11 \
@@ -186,6 +185,20 @@ EFL_DEPENDENCIES += \
 else
 EFL_CONF_OPTS += --with-x=no \
 	--with-x11=none
+endif
+
+ifeq ($(BR2_PACKAGE_EFL_X_XLIB_GLX_FULL),y)
+EFL_CONF_OPTS += --with-opengl=full
+EFL_DEPENDENCIES += libgl
+endif
+
+ifeq ($(BR2_PACKAGE_EFL_X_XLIB_GLX_ES),y)
+EFL_CONF_OPTS += --with-opengl=es
+EFL_DEPENDENCIES += libgles
+endif
+
+ifeq ($(BR2_PACKAGE_EFL_X_XLIB_GLX_NONE),y)
+EFL_CONF_OPTS += --with-opengl=none
 endif
 
 ifeq ($(BR2_PACKAGE_EFL_X_XLIB),y)

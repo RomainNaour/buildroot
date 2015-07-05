@@ -79,6 +79,32 @@ comment "for libecore XCB support disable recommanded configurations"
 
 endchoice
 
+if BR2_PACKAGE_EFL_X_XLIB
+
+choice
+	prompt "select libevas OpenGL support"
+
+config BR2_PACKAGE_EFL_X_XLIB_GLX_FULL
+	bool "libevas OpenGL full support"
+	depends on BR2_PACKAGE_HAS_LIBGL
+
+comment "libevas OpenGLES support needs libgl"
+	depends on !BR2_PACKAGE_HAS_LIBGL
+
+config BR2_PACKAGE_EFL_X_XLIB_GLX_ES
+	bool "libevas OpenGLES support"
+	depends on BR2_PACKAGE_HAS_LIBGLES
+
+comment "libevas OpenGLES support needs libgles"
+	depends on !BR2_PACKAGE_HAS_LIBGLES
+
+config BR2_PACKAGE_EFL_X_XLIB_GLX_NONE
+	bool "libevas disable OpenGL support"
+
+endchoice
+
+endif # BR2_PACKAGE_EFL_X_XLIB
+
 endif # BR2_PACKAGE_EFL_X
 
 comment "libevas loaders"
