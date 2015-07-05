@@ -35,7 +35,6 @@ LIBEFL_GETTEXTIZE = YES
 # --disable-systemd: disable systemd support.
 # --disable-xinput22: disable X11 XInput v2.2+ support.
 # --enable-lua-old: disable Elua and remove luajit dependency.
-# --with-opengl=none: disable opengl support.
 LIBEFL_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
@@ -43,8 +42,7 @@ LIBEFL_CONF_OPTS = \
 	--disable-sdl \
 	--disable-systemd \
 	--disable-xinput22 \
-	--enable-lua-old \
-	--with-opengl=none
+	--enable-lua-old
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_LIBEFL_RECOMMENDED_CONFIG),)
@@ -166,6 +164,15 @@ LIBEFL_DEPENDENCIES += \
 	xlib_libXtst
 else
 LIBEFL_CONF_OPTS += --with-x11=none
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_OPENGLES),y)
+LIBEFL_CONF_OPTS += --with-opengl=es
+LIBEFL_DEPENDENCIES += libgles
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_OPENGL_NONE),y)
+LIBEFL_CONF_OPTS += --with-opengl=none
 endif
 
 # Loaders that need external dependencies needs to be --enable-XXX=yes
