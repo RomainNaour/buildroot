@@ -176,8 +176,7 @@ endif
 ifeq ($(BR2_PACKAGE_LIBEFL_X),y)
 LIBEFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
 	--x-includes=$(STAGING_DIR)/usr/include \
-	--x-libraries=$(STAGING_DIR)/usr/lib \
-	--with-opengl=none
+	--x-libraries=$(STAGING_DIR)/usr/lib
 
 LIBEFL_DEPENDENCIES += \
 	xlib_libX11 \
@@ -185,6 +184,20 @@ LIBEFL_DEPENDENCIES += \
 else
 LIBEFL_CONF_OPTS += --with-x=no \
 	--with-x11=none
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_X_XLIB_GLX_FULL),y)
+LIBEFL_CONF_OPTS += --with-opengl=full
+LIBEFL_DEPENDENCIES += libgl
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_X_XLIB_GLX_ES),y)
+LIBEFL_CONF_OPTS += --with-opengl=es
+LIBEFL_DEPENDENCIES += libgles
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_X_XLIB_GLX_NONE),y)
+LIBEFL_CONF_OPTS += --with-opengl=none
 endif
 
 ifeq ($(BR2_PACKAGE_LIBEFL_X_XLIB),y)
