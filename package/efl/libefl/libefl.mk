@@ -117,6 +117,13 @@ endif
 # There is no alsa support yet in Ecore_Audio.
 # configure will disable alsa support even if alsa-lib is selected.
 
+ifeq ($(BR2_PACKAGE_HARFBUZZ),y)
+LIBEFL_DEPENDENCIES += harfbuzz
+LIBEFL_CONF_OPTS += --enable-harfbuzz=yes
+else
+LIBEFL_CONF_OPTS += --enable-harfbuzz=no
+endif
+
 ifeq ($(BR2_PACKAGE_TSLIB),y)
 LIBEFL_DEPENDENCIES += tslib
 LIBEFL_CONF_OPTS += --enable-tslib
