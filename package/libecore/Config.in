@@ -1,5 +1,7 @@
 config BR2_PACKAGE_LIBECORE
 	bool "libecore"
+	depends on BR2_USE_MMU # efl
+	depends on BR2_USE_WCHAR # efl
 	select BR2_PACKAGE_LIBEINA
 	help
 	  Ecore is the event/X abstraction layer that makes doing
@@ -44,3 +46,6 @@ comment "evas support needs a toolchain w/ threads"
 	depends on !BR2_TOOLCHAIN_HAS_THREADS
 
 endif # BR2_PACKAGE_LIBECORE
+
+comment "libecore needs a toolchain w/ wchar"
+	depends on !BR2_USE_WCHAR
