@@ -84,6 +84,11 @@ config BR2_PACKAGE_LIBEFL_RECOMMENDED_CONFIG
 	    support of removable devices etc... and disabling this will
 	    hurt support for Enlightenment and its filemanager.
 
+comment "libecore video support"
+
+config BR2_PACKAGE_LIBEFL_FB
+	bool "FB support"
+
 comment "libevas loaders"
 
 config BR2_PACKAGE_LIBEFL_PNG
