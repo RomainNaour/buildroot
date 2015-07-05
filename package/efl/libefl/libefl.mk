@@ -23,8 +23,9 @@ LIBEFL_INSTALL_STAGING = YES
 LIBEFL_DEPENDENCIES = host-pkgconf host-libefl dbus freetype jpeg lua udev \
 	util-linux zlib
 
-# regenerate the configure script:
-# https://phab.enlightenment.org/T2718
+# Regenerate the autotools:
+#  - to fix an issue in eldbus-codegen: https://phab.enlightenment.org/T2718
+#  - to remove dependency on libXp: https://phab.enlightenment.org/D3150
 LIBEFL_AUTORECONF = YES
 LIBEFL_GETTEXTIZE = YES
 
@@ -43,8 +44,7 @@ LIBEFL_CONF_OPTS = \
 	--disable-sdl \
 	--disable-systemd \
 	--enable-lua-old \
-	--with-opengl=none \
-	--with-x11=none
+	--with-opengl=none
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_LIBEFL_RECOMMENDED_CONFIG),)
@@ -144,6 +144,27 @@ ifeq ($(BR2_PACKAGE_LIBEFL_FB),y)
 LIBEFL_CONF_OPTS += --enable-fb
 else
 LIBEFL_CONF_OPTS += --disable-fb
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_X_XLIB),y)
+LIBEFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
+	--with-x11=xlib \
+	--x-includes=$(STAGING_DIR)/usr/include \
+	--x-libraries=$(STAGING_DIR)/usr/lib
+
+LIBEFL_DEPENDENCIES += \
+	xlib_libX11 \
+	xlib_libXcomposite \
+	xlib_libXcursor \
+	xlib_libXdamage \
+	xlib_libXext \
+	xlib_libXinerama \
+	xlib_libXrandr \
+	xlib_libXrender \
+	xlib_libXScrnSaver \
+	xlib_libXtst
+else
+LIBEFL_CONF_OPTS += --with-x11=none
 endif
 
 # Loaders that need external dependencies needs to be --enable-XXX=yes
