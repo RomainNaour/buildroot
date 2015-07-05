@@ -181,6 +181,10 @@ else
 EFL_CONF_OPTS += --enable-sdl=no
 endif
 
+ifeq ($(BR2_PACKAGE_EFL_X_XLIB_GLX_FULL)$(BR2_PACKAGE_EFL_SDL2),yy)
+EFL_DEPENDENCIES += sdl_gfx libglu
+endif
+
 ifeq ($(BR2_PACKAGE_EFL_X),y)
 EFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
 	--x-includes=$(STAGING_DIR)/usr/include \
