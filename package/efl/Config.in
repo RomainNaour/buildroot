@@ -46,6 +46,10 @@ config BR2_PACKAGE_EFL_SDL2
 	bool "libevas SDL2 support"
 	# SDL support is not available with OpenGLES.
 	depends on !BR2_PACKAGE_EFL_X_XLIB_GLX_ES
+	# evas include sdl header in Evas_Engine_GL_SDL.h
+	# and evas_gl_common.h when --with-opengl=full and --enable-sdl=yes are
+	# used at the same time.
+	depends on !BR2_PACKAGE_EFL_X_XLIB_GLX_FULL # broken
 	select BR2_PACKAGE_SDL2 # configure check for sdl2 headers
 
 config BR2_PACKAGE_EFL_X
@@ -95,6 +99,7 @@ choice
 config BR2_PACKAGE_EFL_X_XLIB_GLX_FULL
 	bool "libevas OpenGL full support"
 	depends on BR2_PACKAGE_HAS_LIBGL
+	select BR2_PACKAGE_LIBGLU if BR2_PACKAGE_EFL_SDL2 # evas depends on libglu header in evas_engine.c
 
 comment "libevas OpenGLES support needs libgl"
 	depends on !BR2_PACKAGE_HAS_LIBGL
