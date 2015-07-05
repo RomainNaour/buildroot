@@ -46,6 +46,11 @@ else
 LIBEFL_CONF_OPTS += --disable-libmount
 endif
 
+# libblkid is part of required tools, see EFL's README.
+ifeq ($(BR2_PACKAGE_UTIL_LINUX_LIBBLKID),y)
+LIBEFL_DEPENDENCIES += util-linux
+endif
+
 # If fontconfig is disabled, this is going to make general font
 # searching not work, and only some very direct 'load /path/file.ttf'
 # will work alongside some old-school ttf file path searching. This
