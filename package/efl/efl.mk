@@ -12,7 +12,8 @@ EFL_LICENSE_FILES = COPYING
 
 EFL_INSTALL_STAGING = YES
 
-EFL_DEPENDENCIES = host-pkgconf host-efl dbus freetype jpeg lua udev zlib
+EFL_DEPENDENCIES = host-pkgconf host-efl dbus freetype jpeg libcurl lua udev \
+	zlib
 
 # Configure options:
 # --disable-cxx-bindings: disable C++11 bindings.
