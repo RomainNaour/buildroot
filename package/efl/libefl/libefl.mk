@@ -201,6 +201,13 @@ else
 LIBEFL_CONF_OPTS += --enable-image-loader-tiff=no
 endif
 
+ifeq ($(BR2_PACKAGE_LIBEFL_JP2K),y)
+LIBEFL_CONF_OPTS += --enable-image-loader-jp2k=yes
+LIBEFL_DEPENDENCIES += openjpeg
+else
+LIBEFL_CONF_OPTS += --enable-image-loader-jp2k=no
+endif
+
 ifeq ($(BR2_PACKAGE_LIBEFL_WEBP),y)
 LIBEFL_CONF_OPTS += --enable-image-loader-webp=yes
 LIBEFL_DEPENDENCIES += webp
