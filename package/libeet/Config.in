@@ -3,9 +3,14 @@ config BR2_PACKAGE_LIBEET
 	select BR2_PACKAGE_ZLIB
 	select BR2_PACKAGE_JPEG
 	select BR2_PACKAGE_LIBEINA
+	depends on BR2_USE_MMU
+	depends on BR2_USE_WCHAR # efl
 	help
 	  Eet is a tiny library designed to write an arbitary set of
 	  chunks of data to a file and optionally compress each chunk
 	  (very much like a zip file).
 
 	  http://trac.enlightenment.org/e/wiki/Eet
+
+comment "libeet needs a toolchain w/ wchar"
+	depends on !BR2_USE_WCHAR
