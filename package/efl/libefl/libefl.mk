@@ -13,7 +13,8 @@ LIBEFL_LICENSE_FILES = COPYING
 
 LIBEFL_INSTALL_STAGING = YES
 
-LIBEFL_DEPENDENCIES = host-pkgconf host-libefl dbus freetype jpeg lua udev zlib
+LIBEFL_DEPENDENCIES = host-pkgconf host-libefl dbus freetype jpeg libcurl lua \
+	udev zlib
 
 # regenerate the configure script:
 # https://phab.enlightenment.org/T2718
