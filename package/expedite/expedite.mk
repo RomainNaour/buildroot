@@ -4,12 +4,16 @@
 #
 ################################################################################
 
-EXPEDITE_VERSION = 1.7.10
-EXPEDITE_SITE = http://download.enlightenment.org/releases
+EXPEDITE_VERSION = 3ce8b3f1451700f9a2da60c2e717c644220e2449
+EXPEDITE_SITE = http://git.enlightenment.org/tools/expedite.git
+EXPEDITE_SITE_METHOD = git
 EXPEDITE_LICENSE = BSD-2c
 EXPEDITE_LICENSE_FILES = COPYING
 
-EXPEDITE_DEPENDENCIES = libevas libeina libeet
+EXPEDITE_DEPENDENCIES = host-efl efl
+
+# There is no configure script in the git tree.
+EXPEDITE_AUTORECONF = YES
 
 ifeq ($(BR2_PACKAGE_LIBEVAS_X11),y)
 EXPEDITE_CONF_OPTS += --with-x=$(STAGING_DIR) \
