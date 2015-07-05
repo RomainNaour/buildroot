@@ -174,6 +174,11 @@ else
 EFL_CONF_OPTS += --with-x11=none
 endif
 
+ifeq ($(BR2_PACKAGE_XLIB_LIBXPRESENT),y)
+EFL_CONF_OPTS += --enable-xpresent
+EFL_DEPENDENCIES += xlib_libXpresent
+endif
+
 # Loaders that need external dependencies needs to be --enable-XXX=yes
 # otherwise the default is '=static'.
 # All other loaders are statically built-in
