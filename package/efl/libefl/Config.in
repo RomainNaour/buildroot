@@ -1,0 +1,65 @@
+config BR2_PACKAGE_LIBEFL
+	bool "libefl"
+	depends on BR2_INSTALL_LIBSTDCPP
+	depends on BR2_PACKAGE_HAS_UDEV # libudev
+	depends on BR2_TOOLCHAIN_HAS_THREADS # untested without threads
+	depends on BR2_USE_MMU
+	depends on BR2_USE_WCHAR # use wchar_t
+	depends on !BR2_STATIC_LIBS # dlfcn.h
+	select BR2_PACKAGE_DBUS
+	select BR2_PACKAGE_FREETYPE
+	select BR2_PACKAGE_JPEG # Emile needs libjpeg
+	select BR2_PACKAGE_LUA # Evas lua 5.1 or 5.2
+	help
+	  Enlightenment Foundation Libraries
+
+	  https://enlightenment.org
+
+if BR2_PACKAGE_LIBEFL
+
+config BR2_PACKAGE_LIBEFL_RECOMMENDED_CONFIG
+	bool "Use recommended and tested configurations"
+	select BR2_PACKAGE_BULLET
+	select BR2_PACKAGE_FONTCONFIG
+	select BR2_PACKAGE_GSTREAMER1
+	select BR2_PACKAGE_GST1_PLUGINS_BASE
+	select BR2_PACKAGE_LIBFRIBIDI
+	select BR2_PACKAGE_LIBSNDFILE
+	select BR2_PACKAGE_PULSEAUDIO
+	select BR2_PACKAGE_UTIL_LINUX
+	select BR2_PACKAGE_UTIL_LINUX_LIBMOUNT
+	default y
+	help
+	  Avoid to use untested or not recommended configurations,
+	  otherwise we need to add a very long and obscure option
+	  to start the build.
+
+comment "libevas loaders"
+
+config BR2_PACKAGE_LIBEFL_PNG
+	bool "libevas png loader"
+	select BR2_PACKAGE_LIBPNG
+	help
+	  This enables the loader code that loads png files using
+	  libpng.
+
+config BR2_PACKAGE_LIBEFL_JPEG
+	bool "libevas jpeg loader"
+	help
+	  This enables the loader code that loads jpeg files using
+	  libjpeg.
+
+config BR2_PACKAGE_LIBEFL_GIF
+	bool "libevas gif loader"
+	select BR2_PACKAGE_GIFLIB
+	help
+	  This enables the loader code that loads gif files using
+	  libungif.
+
+config BR2_PACKAGE_LIBEFL_TIFF
+	bool "libevas tiff loader"
+	select BR2_PACKAGE_TIFF
+	help
+	  This enables the loader code that loads tiff files.
+
+endif # BR2_PACKAGE_LIBEFL
