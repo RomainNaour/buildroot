@@ -171,6 +171,17 @@ else
 EFL_CONF_OPTS += --enable-fb=no
 endif
 
+ifeq ($(BR2_PACKAGE_EFL_SDL2),y)
+EFL_CONF_OPTS += --enable-sdl=yes
+EFL_DEPENDENCIES += sdl2
+else
+EFL_CONF_OPTS += --enable-sdl=no
+endif
+
+ifeq ($(BR2_PACKAGE_EFL_X_XLIB_GLX_FULL)$(BR2_PACKAGE_EFL_SDL2),yy)
+EFL_DEPENDENCIES += libglu
+endif
+
 ifeq ($(BR2_PACKAGE_EFL_X),y)
 EFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
 	--x-includes=$(STAGING_DIR)/usr/include \
