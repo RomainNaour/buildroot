@@ -169,6 +169,12 @@ else
 EFL_CONF_OPTS += --enable-wayland=no
 endif
 
+ifeq ($(BR2_PACKAGE_EFL_FB),y)
+EFL_CONF_OPTS += --enable-fb=yes
+else
+EFL_CONF_OPTS += --enable-fb=no
+endif
+
 # image loader: handle only loaders that requires dependencies.
 # All other loaders are builded by default statically.
 ifeq ($(BR2_PACKAGE_EFL_PNG),y)
