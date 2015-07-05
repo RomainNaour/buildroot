@@ -1,8 +1,13 @@
 menuconfig BR2_PACKAGE_EFL
 	bool "Enlightenment Foundation Libraries"
-	depends on BR2_USE_WCHAR
-	# libeina uses madvise(). To revisit when bumping EFL to 1.8
-	depends on BR2_USE_MMU
+	depends on BR2_INSTALL_LIBSTDCPP # libefl
+	depends on BR2_PACKAGE_HAS_UDEV # libefl -> libudev
+	depends on BR2_PACKAGE_LUA # lua 5.1 or better
+	depends on BR2_TOOLCHAIN_HAS_THREADS # libefl
+	depends on BR2_USE_MMU # libefl
+	depends on BR2_USE_WCHAR # libefl
+	depends on !BR2_STATIC_LIBS # libefl
+	select BR2_PACKAGE_LIBEFL
 	help
 	  Enlightenment Foundation Libraries
 
@@ -13,6 +18,7 @@ if BR2_PACKAGE_EFL
 source "package/efl/libeina/Config.in"
 source "package/efl/libecore/Config.in"
 source "package/efl/libeet/Config.in"
+source "package/efl/libefl/Config.in"
 source "package/efl/libefreet/Config.in"
 source "package/efl/libeio/Config.in"
 source "package/efl/libevas/Config.in"
@@ -24,5 +30,12 @@ source "package/efl/libedbus/Config.in"
 
 endif # BR2_PACKAGE_EFL
 
-comment "EFL needs a toolchain w/ wchar"
-	depends on !BR2_USE_WCHAR
+comment "EFL needs udev /dev management and a toolchain w/ C++, dynamic library, threads, wchar"
+	depends on !BR2_PACKAGE_LUA || !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP \
+		|| BR2_STATIC_LIBS || !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR
+	depends on BR2_USE_MMU
+
+comment "EFL needs lua"
+	depends on !BR2_PACKAGE_LUA || !BR2_PACKAGE_HAS_UDEV || !BR2_INSTALL_LIBSTDCPP \
+		|| BR2_STATIC_LIBS || !BR2_TOOLCHAIN_HAS_THREADS || !BR2_USE_WCHAR
+	depends on BR2_USE_MMU
