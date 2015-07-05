@@ -20,7 +20,6 @@ source "package/efl/libevas-generic-loaders/Config.in"
 source "package/efl/libembryo/Config.in"
 source "package/efl/libedje/Config.in"
 source "package/efl/libethumb/Config.in"
-source "package/efl/libelementary/Config.in"
 source "package/efl/libedbus/Config.in"
 
 endif # BR2_PACKAGE_EFL
