@@ -40,6 +40,12 @@ comment "libecore video support"
 config BR2_PACKAGE_EFL_FB
 	bool "libecore framebuffer support"
 
+config BR2_PACKAGE_EFL_SDL2
+	bool "libevas SDL2 support"
+	# SDL support can't be used with OpenGLES.
+	depends on !BR2_PACKAGE_EFL_X_XLIB_GLX_ES
+	select BR2_PACKAGE_SDL2 # configure check for sdl2 headers
+
 config BR2_PACKAGE_EFL_X
 	bool "libecore X support"
 	depends on BR2_PACKAGE_XORG7
