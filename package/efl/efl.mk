@@ -198,6 +198,11 @@ EFL_CONF_OPTS += --with-x=no \
 	--with-x11=none
 endif
 
+ifeq ($(BR2_PACKAGE_XLIB_LIBXPRESENT),y)
+EFL_CONF_OPTS += --enable-xpresent
+EFL_DEPENDENCIES += xlib_libXpresent
+endif
+
 ifeq ($(BR2_PACKAGE_EFL_X_XLIB_GLX_FULL),y)
 EFL_CONF_OPTS += --with-opengl=full
 EFL_DEPENDENCIES += libgl
