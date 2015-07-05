@@ -12,7 +12,8 @@ EFL_LICENSE_FILES = COPYING
 
 EFL_INSTALL_STAGING = YES
 
-EFL_DEPENDENCIES = host-pkgconf host-efl dbus freetype jpeg lua udev zlib
+EFL_DEPENDENCIES = host-pkgconf host-efl dbus freetype jpeg libcurl lua udev \
+	zlib
 
 # Makefiles bundled with efl archive have some issue when linking
 # with libecore.so when cross-compiling.
