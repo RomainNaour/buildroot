@@ -117,6 +117,11 @@ comment "Warning: one of the recommended option for EFL is not enabled"
 		|| !BR2_PACKAGE_LIBEFL_PULSEAUDIO \
 		|| !BR2_PACKAGE_LIBEFL_UTIL_LINUX_LIBMOUNT
 
+comment "libecore video support"
+
+config BR2_PACKAGE_LIBEFL_FB
+	bool "FB support"
+
 comment "libevas loaders"
 
 config BR2_PACKAGE_LIBEFL_PNG
