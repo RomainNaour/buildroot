@@ -195,6 +195,13 @@ else
 LIBEFL_CONF_OPTS += --enable-image-loader-tiff=no
 endif
 
+ifeq ($(BR2_PACKAGE_LIBEFL_WEBP),y)
+LIBEFL_CONF_OPTS += --enable-image-loader-webp=yes
+LIBEFL_DEPENDENCIES += webp
+else
+LIBEFL_CONF_OPTS += --enable-image-loader-webp=no
+endif
+
 $(eval $(autotools-package))
 
 ################################################################################
