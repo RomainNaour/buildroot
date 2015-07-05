@@ -43,8 +43,7 @@ LIBEFL_CONF_OPTS = \
 	--disable-cxx-bindings \
 	--disable-sdl \
 	--disable-systemd \
-	--enable-lua-old \
-	--with-opengl=none
+	--enable-lua-old
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_LIBEFL_RECOMMENDED_CONFIG),)
@@ -165,6 +164,20 @@ LIBEFL_DEPENDENCIES += \
 	xlib_libXtst
 else
 LIBEFL_CONF_OPTS += --with-x11=none
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_OPENGL),y)
+LIBEFL_CONF_OPTS += --with-opengl=full
+LIBEFL_DEPENDENCIES += libgl
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_OPENGLES),y)
+LIBEFL_CONF_OPTS += --with-opengl=es
+LIBEFL_DEPENDENCIES += libgles
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_OPENGL_NONE),y)
+LIBEFL_CONF_OPTS += --with-opengl=none
 endif
 
 # Loaders that need external dependencies needs to be --enable-XXX=yes
