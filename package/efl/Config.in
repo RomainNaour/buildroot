@@ -8,6 +8,7 @@ config BR2_PACKAGE_EFL
 	select BR2_PACKAGE_DBUS
 	select BR2_PACKAGE_FREETYPE
 	select BR2_PACKAGE_LUA # Evas lua 5.1 or 5.2
+	select BR2_PACKAGE_GETTEXT if BR2_NEEDS_GETTEXT_IF_LOCALE
 	help
 	  Enlightenment Foundation Libraries
 
