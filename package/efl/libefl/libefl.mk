@@ -18,6 +18,7 @@ LIBEFL_DEPENDENCIES = host-pkgconf host-libefl dbus freetype jpeg libcurl lua \
 
 # regenerate the configure script:
 # https://phab.enlightenment.org/T2718
+# configure.ac patched by 0002-ecore_x-Remove-XPrint-usage.patch
 LIBEFL_AUTORECONF = YES
 LIBEFL_GETTEXTIZE = YES
 
@@ -30,7 +31,7 @@ LIBEFL_CONF_OPTS = \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
 	--disable-cxx-bindings \
 	--enable-lua-old \
-	--with-x11=none
+	--enable-lua-old
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_LIBEFL_RECOMMENDED_CONFIG),)
@@ -170,6 +171,65 @@ ifeq ($(BR2_PACKAGE_LIBEFL_FB),y)
 LIBEFL_CONF_OPTS += --enable-fb=yes
 else
 LIBEFL_CONF_OPTS += --enable-fb=no
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_X),y)
+LIBEFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
+	--x-includes=$(STAGING_DIR)/usr/include \
+	--x-libraries=$(STAGING_DIR)/usr/lib \
+	--with-opengl=none
+
+LIBEFL_DEPENDENCIES += \
+	xlib_libX11 \
+	xlib_libXext
+else
+LIBEFL_CONF_OPTS += --with-x=no \
+	--with-x11=none
+endif
+
+ifeq ($(BR2_PACKAGE_LIBEFL_X_XLIB),y)
+LIBEFL_DEPENDENCIES += \
+	xlib_libX11 \
+	xlib_libXcomposite \
+	xlib_libXcursor \
+	xlib_libXdamage \
+	xlib_libXext \
+	xlib_libXinerama \
+	xlib_libXrandr \
+	xlib_libXrender \
+	xlib_libXScrnSaver \
+	xlib_libXtst
+LIBEFL_CONF_OPTS += --with-x11=xlib
+endif
+
+# xcb-util-image to provide xcb-image.pc
+# xcb-util-renderutil to provide xcb-renderutil.pc
+# xcb-util-wm to provide xcb-icccm.pc
+# xcb-util-keysyms to provide xcb-keysyms.pc
+ifeq ($(BR2_PACKAGE_LIBEFL_X_XCB),y)
+LIBEFL_DEPENDENCIES += libxcb \
+	xcb-util-image \
+	xcb-util-keysyms \
+	xcb-util-renderutil \
+	xcb-util-wm
+# You have chosen to use XCB instead of Xlib. It is a myth that XCB
+# is amazingly faster than Xlib (when used sensibly). It can be
+# faster in a few corner cases on startup of an app, but it comes
+# with many downsides. One of those is more complex code inside
+# ecore_x, which is far less tested in XCB mode than Xlib. Also
+# the big catch is that OpenGL support basically requires Xlib anyway
+# so if you want OpenGL in X11, you need Xlib regardless and so you
+# gain nothing really in terms of speed and no savings in memory
+# because Xlib is still linked, loaded and used, BUT instead you
+# have OpenGL drivers working with an hybrid XCB/Xlib (mostly XCB)
+# toolkit and this is basically never tested by anyone working on
+# the OpenGL drivers, so you will have bugs. Do not enable XCB
+# and use OpenGL. XCB is only useful if you wish to shave a few Kb
+# off the memory footprint of a whole system and live with less
+# tested code, and possibly unimplemented features in ecore_x. To
+# remove the XCB setup, remove the --with-x11=xcb option to
+# configure.
+LIBEFL_CONF_OPTS += --with-x11=xcb
 endif
 
 # image loader: handle only loaders that requires dependencies.
