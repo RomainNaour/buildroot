@@ -41,12 +41,12 @@ ifeq ($(BR2_PACKAGE_SDL2_X11),y)
 SDL2_CONF_OPTS += --enable-video-x11=yes --with-x
 SDL2_DEPENDENCIES += \
 	xlib_libX11 xlib_libXext \
-	$(if $(BR2_PACKAGE_XLIB_LIBXRENDER),xlib_libXrender) \
-	$(if $(BR2_PACKAGE_XLIB_LIBXRANDR),xlib_libXrandr) \
-	$(if $(BR2_PACKAGE_XLIB_LIBXCURSOR,xlib_libXcursor) \
-	$(if $(BR2_PACKAGE_XLIB_LIBXINERAMA,xlib_libXinerama) \
-	$(if $(BR2_PACKAGE_XPROTO_INPUTPROTO,xproto_inputproto) \
-	$(if $(BR2_PACKAGE_XPROTO_SCRNSAVERPROTO,xproto_scrnsaverproto)
+	$(if $(BR2_PACKAGE_XLIB_LIBXRENDER),xlib_libXrender,) \
+	$(if $(BR2_PACKAGE_XLIB_LIBXRANDR),xlib_libXrandr,) \
+	$(if $(BR2_PACKAGE_XLIB_LIBXCURSOR),xlib_libXcursor,) \
+	$(if $(BR2_PACKAGE_XLIB_LIBXINERAMA),xlib_libXinerama,) \
+	$(if $(BR2_PACKAGE_XPROTO_INPUTPROTO),xproto_inputproto,) \
+	$(if $(BR2_PACKAGE_XPROTO_SCRNSAVERPROTO),xproto_scrnsaverproto,)
 else
 SDL2_CONF_OPTS += --enable-video-x11=no --without-x
 endif
