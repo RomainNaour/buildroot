@@ -24,8 +24,7 @@ PERF_MAKE_FLAGS = \
 	NO_LIBPYTHON=1 \
 	DESTDIR=$(TARGET_DIR) \
 	prefix=/usr \
-	WERROR=0 \
-	ASCIIDOC=
+	WERROR=0
 
 # The call to backtrace() function fails for ARC, because for some
 # reason the unwinder from libgcc returns early. Thus the usage of
