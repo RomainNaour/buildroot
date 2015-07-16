@@ -92,6 +92,7 @@ define PERF_BUILD_CMDS
 			fi \
 		fi \
 	fi
+	$(SED) 's%-I/usr/include/slang%%' $(@D)/tools/perf/config/Makefile
 	$(TARGET_MAKE_ENV) $(MAKE1) $(PERF_MAKE_FLAGS) \
 		-C $(@D)/tools/perf O=$(@D)/tools/perf/
 endef
