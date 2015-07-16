@@ -42,10 +42,14 @@ endif
 
 ifeq ($(BR2_PACKAGE_LIBUNWIND),y)
 PERF_DEPENDENCIES += libunwind
+else
+PERF_MAKE_FLAGS += NO_LIBUNWIND=1
 endif
 
 ifeq ($(BR2_PACKAGE_NUMACTL),y)
 PERF_DEPENDENCIES += numactl
+else
+PERF_MAKE_FLAGS += NO_LIBNUMA=1
 endif
 
 ifeq ($(BR2_PACKAGE_ELFUTILS),y)
