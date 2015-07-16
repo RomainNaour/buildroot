@@ -18,7 +18,6 @@ PERF_MAKE_FLAGS = \
 	$(LINUX_MAKE_FLAGS) \
 	ARCH=$(PERF_ARCH) \
 	NO_LIBAUDIT=1 \
-	NO_NEWT=1 \
 	NO_GTK2=1 \
 	NO_LIBPERL=1 \
 	NO_LIBPYTHON=1 \
@@ -36,8 +35,12 @@ ifeq ($(BR2_arc),y)
 PERF_MAKE_FLAGS += NO_BACKTRACE=1
 endif
 
-ifeq ($(BR2_PACKAGE_SLANG),y)
-PERF_DEPENDENCIES += slang
+# Select newt to enable slang support.
+# Slang support is automatically disabled if newt is not installed.
+ifeq ($(BR2_PACKAGE_NEWT),y)
+PERF_DEPENDENCIES += newt
+else
+PERF_MAKE_FLAGS += NO_NEWT=1
 endif
 
 ifeq ($(BR2_PACKAGE_LIBUNWIND),y)
