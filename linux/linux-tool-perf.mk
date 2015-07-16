@@ -35,6 +35,12 @@ ifeq ($(BR2_arc),y)
 PERF_MAKE_FLAGS += NO_BACKTRACE=1
 endif
 
+ifeq ($(BR2_PACKAGE_XZ),y)
+PERF_DEPENDENCIES += xz
+else
+PERF_MAKE_FLAGS += NO_LZMA=1
+endif
+
 # Select newt to enable slang support.
 # Slang support is automatically disabled if newt is not installed.
 ifeq ($(BR2_PACKAGE_NEWT),y)
