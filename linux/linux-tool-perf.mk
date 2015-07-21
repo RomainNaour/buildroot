@@ -97,10 +97,7 @@ define PERF_BUILD_CMDS
 		-C $(@D)/tools/perf O=$(@D)/tools/perf/
 endef
 
-# After installation, we remove the Perl and Python scripts from the
-# target.
 define PERF_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE1) $(PERF_MAKE_FLAGS) \
 		-C $(@D)/tools/perf O=$(@D)/tools/perf/ install
-	$(RM) -rf $(TARGET_DIR)/usr/libexec/perf-core/scripts/
 endef
