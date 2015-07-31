@@ -1,0 +1,46 @@
+From d296d83b601ab5394d16d021787c0708710ef668 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@openwide.fr>
+Date: Wed, 29 Jul 2015 21:18:03 +0200
+Subject: [PATCH 1/5] fix __WORDSIZE warning
+
+src/tests/mult-s16-test.c and src/pulsecore/sample-util.h uses
+the glibc-specific internal macro __WORDSIZE
+
+On musl this macro is defined in sys/reg.h
+
+Related to:
+https://bugs.freedesktop.org/show_bug.cgi?id=90880
+
+Signed-off-by: Romain Naour <romain.naour@openwide.fr>
+---
+ src/pulsecore/sample-util.h | 1 +
+ src/tests/mult-s16-test.c   | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/pulsecore/sample-util.h b/src/pulsecore/sample-util.h
+index 7e7fb92..4b183fa 100644
+--- a/src/pulsecore/sample-util.h
++++ b/src/pulsecore/sample-util.h
+@@ -25,6 +25,7 @@
+ 
+ #include <inttypes.h>
+ #include <limits.h>
++#include <sys/reg.h>
+ 
+ #include <pulse/gccmacro.h>
+ #include <pulse/sample.h>
+diff --git a/src/tests/mult-s16-test.c b/src/tests/mult-s16-test.c
+index 931866a..d0f3ca3 100644
+--- a/src/tests/mult-s16-test.c
++++ b/src/tests/mult-s16-test.c
+@@ -25,6 +25,7 @@
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <math.h>
++#include <sys/reg.h>
+ 
+ #include <pulse/rtclock.h>
+ #include <pulsecore/random.h>
+-- 
+2.4.3
+

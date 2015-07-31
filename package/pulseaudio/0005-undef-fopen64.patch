@@ -1,0 +1,36 @@
+From fa2db4605942f301ff4a2bfa28bc8e7f8a9c9ec4 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@openwide.fr>
+Date: Wed, 29 Jul 2015 23:45:00 +0200
+Subject: [PATCH 5/5] undef fopen64
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+musl define fopen64 as an alias of fopen, this leads to a
+fopen() function redefinition.
+
+Fixes:
+In file included from utils/padsp.c:46:0:
+utils/padsp.c:2680:7: error: redefinition of ‘fopen’
+ FILE *fopen64(const char *filename, const char *mode) {
+
+Signed-off-by: Romain Naour <romain.naour@openwide.fr>
+---
+ src/utils/padsp.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/utils/padsp.c b/src/utils/padsp.c
+index cf01c3a..ac594d9 100644
+--- a/src/utils/padsp.c
++++ b/src/utils/padsp.c
+@@ -63,6 +63,7 @@
+ /* make sure gcc doesn't redefine open and friends as macros */
+ #undef open
+ #undef open64
++#undef fopen64
+ 
+ typedef enum {
+     FD_INFO_MIXER,
+-- 
+2.4.3
+

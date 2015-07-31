@@ -16,6 +16,9 @@ PULSEAUDIO_CONF_OPTS = \
 	--disable-legacy-database-entry-format \
 	--disable-manpages
 
+# configure.ac is patched by 0003-add-posix-ioctl-check.patch
+PULSEAUDIO_AUTORECONF = YES
+
 PULSEAUDIO_DEPENDENCIES = \
 	host-pkgconf libtool json-c libsndfile speex host-intltool \
 	$(if $(BR2_PACKAGE_LIBATOMIC_OPS),libatomic_ops) \

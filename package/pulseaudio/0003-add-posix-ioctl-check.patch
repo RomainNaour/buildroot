@@ -1,0 +1,72 @@
+From e751085b1fd141ceb6c6256cd24273aac27f122c Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@openwide.fr>
+Date: Wed, 29 Jul 2015 22:13:25 +0200
+Subject: [PATCH 3/5] add posix ioctl check
+
+The POSIX specification specifies the ioctl(int, int, ...) prototype:
+http://pubs.opengroup.org/onlinepubs/9699919799/functions/ioctl.html
+
+So the padsp ioctl reimplantation must follow the posix prototype if
+ioctl(int, unsigned long, ...) is not available in the libc.
+
+The chech is based on the Eric Blake's proposal found in autoconf
+mailing list [1].
+
+This should fix the bug #85319:
+https://bugs.freedesktop.org/show_bug.cgi?id=85319
+
+[1] http://lists.gnu.org/archive/html/autoconf/2014-04/msg00020.html
+
+Signed-off-by: Romain Naour <romain.naour@openwide.fr>
+---
+ configure.ac      | 20 ++++++++++++++++++++
+ src/utils/padsp.c |  2 +-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 4854711..2b4508e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -432,6 +432,26 @@ AC_CHECK_HEADERS_ONCE([sys/atomic.h])
+ 
+ # Other
+ AC_CHECK_HEADERS_ONCE([sys/ioctl.h])
++
++# With Glibc ioctl takes an 'unsigned long' instead of the POSIX 'int'
++# for the second parameter.
++AC_CACHE_CHECK([for ioctl with POSIX signature],
++    [gl_cv_func_ioctl_posix_signature],
++    [AC_COMPILE_IFELSE(
++        [AC_LANG_PROGRAM(
++        [[#include <sys/ioctl.h>]],
++        [[extern
++            #ifdef __cplusplus
++            "C"
++            #endif
++            int ioctl (int, int, ...);
++        ]])
++        ],
++        [gl_cv_func_ioctl_posix_signature=yes],
++        [gl_cv_func_ioctl_posix_signature=no])
++    ])
++AS_IF([test "x$gl_cv_func_ioctl_posix_signature" = "xyes"], AC_DEFINE([HAVE_POSIX_IOCTL], 1, [Have a POSIX ioctl?]))
++
+ AC_CHECK_HEADERS_ONCE([byteswap.h])
+ AC_CHECK_HEADERS_ONCE([sys/syscall.h])
+ AC_CHECK_HEADERS_ONCE([sys/eventfd.h])
+diff --git a/src/utils/padsp.c b/src/utils/padsp.c
+index b5250b3..d0dc765 100644
+--- a/src/utils/padsp.c
++++ b/src/utils/padsp.c
+@@ -2370,7 +2370,7 @@ fail:
+     return ret;
+ }
+ 
+-#ifdef sun
++#ifdef HAVE_POSIX_IOCTL
+ int ioctl(int fd, int request, ...) {
+ #else
+ int ioctl(int fd, unsigned long request, ...) {
+-- 
+2.4.3
+
