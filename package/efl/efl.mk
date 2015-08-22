@@ -21,14 +21,20 @@ EFL_AUTORECONF = YES
 EFL_GETTEXTIZE = YES
 
 # Configure options:
-# --disable-cxx-bindings: disable C++11 bindings.
 # --enable-lua-old: disable Elua and remove luajit dependency.
 # --with-x11=none: remove dependency on X.org.
 EFL_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
-	--disable-cxx-bindings \
+	--with-eolian-cxx=$(HOST_DIR)/usr/bin/eolian_cxx \
 	--enable-lua-old
+
+# enable C++ bindings if the toolchain has C++11 support.
+ifeq ($(BR2_TOOLCHAIN_GCC_AT_LEAST_4_8),y)
+EFL_CONF_OPTS += --enable-cxx-bindings
+else
+EFL_CONF_OPTS += --disable-cxx-bindings
+endif
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_EFL_RECOMMENDED_CONFIG),)
@@ -310,7 +316,7 @@ $(eval $(autotools-package))
 ################################################################################
 
 # We want to build only some host tools used later in the build.
-# Actually we want: edje_cc, embryo_cc and eet.
+# Actually we want: edje_cc, eet, embryo_cc and eolian_cxx.
 
 # Host dependencies:
 # * host-dbus: for Eldbus
@@ -330,13 +336,13 @@ HOST_EFL_DEPENDENCIES = \
 
 # Configure options:
 # --disable-audio, --disable-multisense remove libsndfile dependency.
-# --disable-cxx-bindings: disable C++11 bindings.
 # --disable-fontconfig: remove dependency on fontconfig.
 # --disable-fribidi: remove dependency on libfribidi.
 # --disable-gstreamer1: remove dependency on gtreamer 1.0.
 # --disable-libeeze: remove libudev dependency.
 # --disable-libmount: remove dependency on host-util-linux libmount.
 # --disable-physics: remove Bullet dependency.
+# --enable-cxx-bindings: enable C++11 bindings to provide eolian_cxx
 # --enable-image-loader-gif=no: disable Gif dependency.
 # --enable-image-loader-tiff=no: disable Tiff dependency.
 # --enable-lua-old: disable Elua and remove luajit dependency.
@@ -345,7 +351,6 @@ HOST_EFL_DEPENDENCIES = \
 #   Yes I really know what I am doing.
 HOST_EFL_CONF_OPTS += \
 	--disable-audio \
-	--disable-cxx-bindings \
 	--disable-fontconfig \
 	--disable-fribidi \
 	--disable-gstreamer1 \
@@ -353,6 +358,7 @@ HOST_EFL_CONF_OPTS += \
 	--disable-libmount \
 	--disable-multisense \
 	--disable-physics \
+	--enable-cxx-bindings \
 	--enable-image-loader-gif=no \
 	--enable-image-loader-jpeg=yes \
 	--enable-image-loader-png=yes \
