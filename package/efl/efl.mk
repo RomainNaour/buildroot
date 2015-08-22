@@ -28,16 +28,22 @@ EFL_AUTORECONF = YES
 EFL_GETTEXTIZE = YES
 
 # Configure options:
-# --disable-cxx-bindings: disable C++11 bindings.
 # --disable-sdl: disable sdl2 support.
 # --disable-systemd: disable systemd support.
 EFL_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-elua=$(HOST_DIR)/usr/bin/elua \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
-	--disable-cxx-bindings \
+	--with-eolian-cxx=$(HOST_DIR)/usr/bin/eolian_cxx \
 	--disable-sdl \
 	--disable-systemd
+
+# enable C++ bindings if the toolchain has C++11 support.
+ifeq ($(BR2_PACKAGE_EFL_CPP_SUPPORT),y)
+EFL_CONF_OPTS += --enable-cxx-bindings
+else
+EFL_CONF_OPTS += --disable-cxx-bindings
+endif
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_EFL_HAS_RECOMMENDED_CONFIG),)
@@ -247,7 +253,7 @@ $(eval $(autotools-package))
 ################################################################################
 
 # We want to build only some host tools used later in the build.
-# Actually we want: edje_cc, embryo_cc and eet.
+# Actually we want: edje_cc, eet, embryo_cc and eolian_cxx.
 
 # Host dependencies:
 # * host-dbus: for Eldbus
@@ -275,9 +281,15 @@ else
 HOST_EFL_CONF_OPTS += --enable-lua-old
 endif
 
+# Enable C++11 bindings to provide eolian_cxx
+ifeq ($(BR2_PACKAGE_EFL_CPP_SUPPORT),y)
+HOST_EFL_CONF_OPTS += --enable-cxx-bindings
+else
+HOST_EFL_CONF_OPTS += --disable-cxx-bindings
+endif
+
 # Configure options:
 # --disable-audio, --disable-multisense remove libsndfile dependency.
-# --disable-cxx-bindings: disable C++11 bindings.
 # --disable-fontconfig: remove dependency on fontconfig.
 # --disable-fribidi: remove dependency on libfribidi.
 # --disable-gstreamer1: remove dependency on gtreamer 1.0.
@@ -291,7 +303,6 @@ endif
 #   Yes I really know what I am doing.
 HOST_EFL_CONF_OPTS += \
 	--disable-audio \
-	--disable-cxx-bindings \
 	--disable-fontconfig \
 	--disable-fribidi \
 	--disable-gstreamer1 \

@@ -119,6 +119,14 @@ config BR2_PACKAGE_EFL_HAS_RECOMMENDED_CONFIG
 comment "Warning: one of the recommended option for EFL is not enabled"
 	depends on !BR2_PACKAGE_EFL_HAS_RECOMMENDED_CONFIG
 
+config BR2_PACKAGE_EFL_CPP_SUPPORT
+	bool "Enable C++ bindings"
+	depends on BR2_HOST_GCC_AT_LEAST_4_8 # host-efl needs C++11
+	depends on BR2_TOOLCHAIN_GCC_AT_LEAST_4_8 # C++11
+
+comment "C++ bindings needs host and target gcc >= 4.8"
+	depends on !BR2_HOST_GCC_AT_LEAST_4_8 || !BR2_TOOLCHAIN_GCC_AT_LEAST_4_8
+
 comment "libecore video support"
 
 config BR2_PACKAGE_EFL_FB
