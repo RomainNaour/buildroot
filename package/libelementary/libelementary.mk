@@ -18,6 +18,7 @@ LIBELEMENTARY_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-eet-eet=$(HOST_DIR)/usr/bin/eet \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
+	--with-eolian-cxx=$(HOST_DIR)/usr/bin/eolian_cxx \
 	--with-eldbus_codegen=$(HOST_DIR)/usr/bin/eldbus-codegen \
 	--with-elm-prefs-cc=$(HOST_DIR)/usr/bin/elm_prefs_cc \
 	--with-doxygen=no \
@@ -30,8 +31,9 @@ HOST_LIBELEMENTARY_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-eet-eet=$(HOST_DIR)/usr/bin/eet \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
- 	--with-doxygen=no \
- 	--disable-elementary-test
+	--with-eolian-cxx=$(HOST_DIR)/usr/bin/eolian_cxx \
+	--with-doxygen=no \
+	--disable-elementary-test
 
 $(eval $(autotools-package))
 $(eval $(host-autotools-package))
