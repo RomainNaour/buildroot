@@ -366,6 +366,7 @@ endif
 	source "package/edid-decode/Config.in"
 	source "package/econnman/Config.in"
 	source "package/eeprog/Config.in"
+	source "package/espionage/Config.in"
 	source "package/eudev/Config.in"
 	source "package/evemu/Config.in"
 	source "package/evtest/Config.in"

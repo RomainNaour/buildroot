@@ -1,0 +1,9 @@
+config BR2_PACKAGE_ESPIONAGE
+	bool "espionage"
+	depends on BR2_PACKAGE_EFL
+	select BR2_PACKAGE_PYTHON_EFL
+	depends on BR2_PACKAGE_PYTHON || BR2_PACKAGE_PYTHON3 # python-efl
+	help
+	  A complete D-Bus inspector written in python that use the EFL
+
+	  https://git.enlightenment.org/apps/espionage.git
