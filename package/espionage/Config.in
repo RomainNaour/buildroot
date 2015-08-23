@@ -1,0 +1,14 @@
+config BR2_PACKAGE_ESPIONAGE
+	bool "espionage"
+	select BR2_PACKAGE_EFL
+	select BR2_PACKAGE_PYTHON_EFL
+	depends on BR2_INSTALL_LIBSTDCPP # efl
+	depends on BR2_PACKAGE_HAS_UDEV # efl -> libudev
+	depends on BR2_PACKAGE_PYTHON || BR2_PACKAGE_PYTHON3 # python-efl
+	depends on BR2_USE_MMU # efl
+	depends on !BR2_STATIC_LIBS # efl
+	depends on BR2_USE_WCHAR # efl
+	help
+	  A complete D-Bus inspector written in python that use the EFL
+
+	  https://git.enlightenment.org/apps/espionage.git
