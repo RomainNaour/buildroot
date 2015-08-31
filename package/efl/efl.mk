@@ -14,6 +14,11 @@ EFL_INSTALL_STAGING = YES
 
 EFL_DEPENDENCIES = host-pkgconf host-efl dbus freetype jpeg lua udev zlib
 
+# regenerate the configure script:
+# https://phab.enlightenment.org/T2718
+EFL_AUTORECONF = YES
+EFL_GETTEXTIZE = YES
+
 # Configure options:
 # --disable-cxx-bindings: disable C++11 bindings.
 # --enable-lua-old: disable Elua and remove luajit dependency.
