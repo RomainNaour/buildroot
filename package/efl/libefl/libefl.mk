@@ -15,6 +15,11 @@ LIBEFL_INSTALL_STAGING = YES
 
 LIBEFL_DEPENDENCIES = host-pkgconf host-libefl dbus freetype jpeg lua udev zlib
 
+# regenerate the configure script:
+# https://phab.enlightenment.org/T2718
+LIBEFL_AUTORECONF = YES
+LIBEFL_GETTEXTIZE = YES
+
 # Configure options:
 # --disable-cxx-bindings: disable C++11 bindings.
 # --enable-lua-old: disable Elua and remove luajit dependency.
