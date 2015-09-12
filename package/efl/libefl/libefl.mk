@@ -173,10 +173,12 @@ else
 LIBEFL_CONF_OPTS += --enable-fb=no
 endif
 
+# --enable-xinput22 is recommended
 ifeq ($(BR2_PACKAGE_LIBEFL_X),y)
 LIBEFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
 	--x-includes=$(STAGING_DIR)/usr/include \
-	--x-libraries=$(STAGING_DIR)/usr/lib
+	--x-libraries=$(STAGING_DIR)/usr/lib \
+	--enable-xinput22
 
 LIBEFL_DEPENDENCIES += \
 	xlib_libX11 \
