@@ -33,7 +33,6 @@ LIBEFL_GETTEXTIZE = YES
 # --disable-cxx-bindings: disable C++11 bindings.
 # --disable-sdl: disable sdl2 support.
 # --disable-systemd: disable systemd support.
-# --disable-xinput22: disable X11 XInput v2.2+ support.
 # --enable-lua-old: disable Elua and remove luajit dependency.
 # --with-opengl=none: disable opengl support.
 # --with-x11=none: remove dependency on X.org.
@@ -146,10 +145,12 @@ LIBEFL_CONF_OPTS += --disable-fb
 endif
 
 ifeq ($(BR2_PACKAGE_LIBEFL_X_XLIB),y)
+# --enable-xinput22 is recommended
 LIBEFL_CONF_OPTS += --with-x=$(STAGING_DIR) \
 	--with-x11=xlib \
 	--x-includes=$(STAGING_DIR)/usr/include \
-	--x-libraries=$(STAGING_DIR)/usr/lib
+	--x-libraries=$(STAGING_DIR)/usr/lib \
+	--enable-xinput22
 
 LIBEFL_DEPENDENCIES += \
 	xlib_libX11 \
@@ -157,6 +158,7 @@ LIBEFL_DEPENDENCIES += \
 	xlib_libXcursor \
 	xlib_libXdamage \
 	xlib_libXext \
+	xlib_libXi \
 	xlib_libXinerama \
 	xlib_libXrandr \
 	xlib_libXrender \
