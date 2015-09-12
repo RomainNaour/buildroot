@@ -23,11 +23,13 @@ EFL_GETTEXTIZE = YES
 # Configure options:
 # --enable-lua-old: disable Elua and remove luajit dependency.
 # --with-x11=none: remove dependency on X.org.
+# --enable-multisense is recommended
 EFL_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
 	--with-eolian-cxx=$(HOST_DIR)/usr/bin/eolian_cxx \
-	--enable-lua-old
+	--enable-lua-old \
+	--enable-multisense
 
 # enable C++ bindings if the toolchain has C++11 support.
 ifeq ($(BR2_TOOLCHAIN_GCC_AT_LEAST_4_8),y)
