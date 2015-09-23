@@ -66,6 +66,13 @@ else
 EFL_CONF_OPTS += --disable-libmount
 endif
 
+ifeq ($(BR2_PACKAGE_SYSTEMD),y)
+EFL_CONF_OPTS += --enable-systemd
+EFL_DEPENDENCIES += systemd
+else
+EFL_CONF_OPTS += --disable-systemd
+endif
+
 ifeq ($(BR2_PACKAGE_FONTCONFIG),y)
 EFL_CONF_OPTS += --enable-fontconfig
 EFL_DEPENDENCIES += fontconfig
