@@ -32,7 +32,6 @@ LIBEFL_GETTEXTIZE = YES
 # Configure options:
 # --disable-cxx-bindings: disable C++11 bindings.
 # --disable-sdl: disable sdl2 support.
-# --disable-systemd: disable systemd support.
 # --enable-lua-old: disable Elua and remove luajit dependency.
 # --with-opengl=none: disable opengl support.
 # --with-x11=none: remove dependency on X.org.
@@ -41,7 +40,6 @@ LIBEFL_CONF_OPTS = \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
 	--disable-cxx-bindings \
 	--disable-sdl \
-	--disable-systemd \
 	--enable-lua-old
 
 # Disable untested configuration warning.
@@ -54,6 +52,13 @@ LIBEFL_DEPENDENCIES += util-linux
 LIBEFL_CONF_OPTS += --enable-libmount
 else
 LIBEFL_CONF_OPTS += --disable-libmount
+endif
+
+ifeq ($(BR2_PACKAGE_SYSTEMD),y)
+LIBEFL_CONF_OPTS += --enable-systemd
+LIBEFL_DEPENDENCIES += systemd
+else
+LIBEFL_CONF_OPTS += --disable-systemd
 endif
 
 ifeq ($(BR2_PACKAGE_FONTCONFIG),y)
