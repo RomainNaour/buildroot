@@ -52,6 +52,13 @@ ifeq ($(BR2_PACKAGE_UTIL_LINUX_LIBBLKID),y)
 LIBEFL_DEPENDENCIES += util-linux
 endif
 
+ifeq ($(BR2_PACKAGE_SYSTEMD),y)
+LIBEFL_CONF_OPTS += --enable-systemd
+LIBEFL_DEPENDENCIES += systemd
+else
+LIBEFL_CONF_OPTS += --disable-systemd
+endif
+
 # If fontconfig is disabled, this is going to make general font
 # searching not work, and only some very direct 'load /path/file.ttf'
 # will work alongside some old-school ttf file path searching. This
