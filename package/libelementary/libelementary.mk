@@ -12,7 +12,7 @@ LIBELEMENTARY_LICENSE_FILES = COPYING
 
 LIBELEMENTARY_INSTALL_STAGING = YES
 
-LIBELEMENTARY_DEPENDENCIES = host-pkgconf host-libefl host-libelementary libefl
+LIBELEMENTARY_DEPENDENCIES = host-pkgconf host-efl host-libelementary efl
 
 LIBELEMENTARY_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
@@ -25,7 +25,7 @@ LIBELEMENTARY_CONF_OPTS = \
 
 # We need a host package in order to provide elm_prefs_cc and
 # elementary_codegen.
-HOST_LIBELEMENTARY_DEPENDENCIES = host-pkgconf host-libefl
+HOST_LIBELEMENTARY_DEPENDENCIES = host-pkgconf host-efl
 HOST_LIBELEMENTARY_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-eet-eet=$(HOST_DIR)/usr/bin/eet \
