@@ -32,7 +32,6 @@ EFL_GETTEXTIZE = YES
 # --disable-sdl: disable sdl2 support.
 # --disable-systemd: disable systemd support.
 # --disable-xinput22: disable X11 XInput v2.2+ support.
-# --with-opengl=none: disable opengl support.
 EFL_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-elua=$(HOST_DIR)/usr/bin/elua \
@@ -40,8 +39,7 @@ EFL_CONF_OPTS = \
 	--disable-cxx-bindings \
 	--disable-sdl \
 	--disable-systemd \
-	--disable-xinput22 \
-	--with-opengl=none
+	--disable-xinput22
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_EFL_HAS_RECOMMENDED_CONFIG),)
@@ -172,6 +170,20 @@ EFL_DEPENDENCIES += \
 	xlib_libXtst
 else
 EFL_CONF_OPTS += --with-x11=none
+endif
+
+ifeq ($(BR2_PACKAGE_EFL_OPENGL),y)
+EFL_CONF_OPTS += --with-opengl=full
+EFL_DEPENDENCIES += libgl
+endif
+
+ifeq ($(BR2_PACKAGE_EFL_OPENGLES),y)
+EFL_CONF_OPTS += --with-opengl=es
+EFL_DEPENDENCIES += libgles
+endif
+
+ifeq ($(BR2_PACKAGE_EFL_OPENGL_NONE),y)
+EFL_CONF_OPTS += --with-opengl=none
 endif
 
 ifeq ($(BR2_PACKAGE_XLIB_LIBXPRESENT),y)
