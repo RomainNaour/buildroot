@@ -31,15 +31,13 @@ EFL_GETTEXTIZE = YES
 # --disable-cxx-bindings: disable C++11 bindings.
 # --disable-sdl: disable sdl2 support.
 # --disable-systemd: disable systemd support.
-# --disable-xinput22: disable X11 XInput v2.2+ support.
 EFL_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
 	--with-elua=$(HOST_DIR)/usr/bin/elua \
 	--with-eolian-gen=$(HOST_DIR)/usr/bin/eolian_gen \
 	--disable-cxx-bindings \
 	--disable-sdl \
-	--disable-systemd \
-	--disable-xinput22
+	--disable-systemd
 
 # Disable untested configuration warning.
 ifeq ($(BR2_PACKAGE_EFL_HAS_RECOMMENDED_CONFIG),)
@@ -150,12 +148,14 @@ else
 EFL_CONF_OPTS += --disable-fb
 endif
 
+# --enable-xinput22 is recommended
 ifeq ($(BR2_PACKAGE_EFL_X_XLIB),y)
 EFL_CONF_OPTS += \
 	--with-x11=xlib \
 	--with-x=$(STAGING_DIR) \
 	--x-includes=$(STAGING_DIR)/usr/include \
-	--x-libraries=$(STAGING_DIR)/usr/lib
+	--x-libraries=$(STAGING_DIR)/usr/lib \
+	--enable-xinput22
 
 EFL_DEPENDENCIES += \
 	xlib_libX11 \
@@ -163,6 +163,7 @@ EFL_DEPENDENCIES += \
 	xlib_libXcursor \
 	xlib_libXdamage \
 	xlib_libXext \
+	xlib_libXi \
 	xlib_libXinerama \
 	xlib_libXrandr \
 	xlib_libXrender \
