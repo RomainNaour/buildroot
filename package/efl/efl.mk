@@ -177,8 +177,9 @@ EFL_CONF_OPTS += --with-opengl=full
 EFL_DEPENDENCIES += libgl
 endif
 
+# OpenGL ES requires EGL
 ifeq ($(BR2_PACKAGE_EFL_OPENGLES),y)
-EFL_CONF_OPTS += --with-opengl=es
+EFL_CONF_OPTS += --with-opengl=es --enable-egl
 EFL_DEPENDENCIES += libgles
 endif
 
