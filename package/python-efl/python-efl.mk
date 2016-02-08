@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-PYTHON_EFL_VERSION = 1.16.0
+PYTHON_EFL_VERSION = 1.17.0
 PYTHON_EFL_SOURCE = python-efl-$(PYTHON_EFL_VERSION).tar.xz
 PYTHON_EFL_SITE = https://download.enlightenment.org/rel/bindings/python
 PYTHON_EFL_LICENSE = GPLv3
