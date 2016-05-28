@@ -1,5 +1,7 @@
 config BR2_PACKAGE_SKELETON
 	bool
 	default y
+	select BR2_PACKAGE_SKELETON_SYSV   if BR2_ROOTFS_SKELETON_DEFAULT
+	select BR2_PACKAGE_SKELETON_CUSTOM if BR2_ROOTFS_SKELETON_CUSTOM
 	help
 	  The basic skeleton for your rootfs.
