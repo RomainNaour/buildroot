@@ -5,7 +5,8 @@ choice
 
 config BR2_ROOTFS_SKELETON_DEFAULT
 	bool "default target skeleton"
-	select BR2_PACKAGE_SKELETON_SYSV
+	select BR2_PACKAGE_SKELETON_SYSV    if !BR2_INIT_SYSTEMD
+	select BR2_PACKAGE_SKELETON_SYSTEMD if BR2_INIT_SYSTEMD
 	help
 	  Use default target skeleton
 
