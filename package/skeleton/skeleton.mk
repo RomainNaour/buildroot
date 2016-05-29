@@ -65,6 +65,14 @@ SKELETON_PATH = system/skeleton
 
 endif # ! custom skeleton
 
+# This function rsyncs the skeleton directory in $(1) to the destination
+# in $(2), which should be either $(TARTGET_DIR) or $(STAGING_DIR)
+define SKELETON_RSYNC
+	rsync -a --ignore-times $(RSYNC_VCS_EXCLUSIONS) \
+		--chmod=u=rwX,go=rX --exclude .empty --exclude '*~' \
+		$(1)/ $(2)/
+endef
+
 # This function handles the merged or non-merged /usr cases
 ifeq ($(BR2_ROOTFS_MERGED_USR),y)
 define SKELETON_USR_SYMLINKS_OR_DIRS
@@ -89,9 +97,7 @@ SKELETON_LIB_SYMLINK = lib32
 endif
 
 define SKELETON_INSTALL_TARGET_CMDS
-	rsync -a --ignore-times $(RSYNC_VCS_EXCLUSIONS) \
-		--chmod=u=rwX,go=rX --exclude .empty --exclude '*~' \
-		$(SKELETON_PATH)/ $(TARGET_DIR)/
+	$(call SKELETON_RSYNC,$(SKELETON_PATH),$(TARGET_DIR))
 	$(call SKELETON_USR_SYMLINKS_OR_DIRS,$(TARGET_DIR))
 	ln -snf lib $(TARGET_DIR)/$(SKELETON_LIB_SYMLINK)
 	ln -snf lib $(TARGET_DIR)/usr/$(SKELETON_LIB_SYMLINK)
