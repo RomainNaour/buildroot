@@ -29,6 +29,13 @@ SKELETON_SYSV_INSTALL_STAGING = YES
 # - SKELETON_SET_NETWORK_IFUPDOWN_LOOPBACK
 # - SKELETON_SET_NETWORK_IFUPDOWN_DHCP
 
+# Even without a configured DHCP interface, we still need the network part
+# of the skeleton, because it is used to configure the loopback interface.
+define SKELETON_SYSV_INSTALL_TARGET_CMDS
+	$(call SKELETON_RSYNC,system/skeleton-sysv,$(TARGET_DIR))
+	$(call SKELETON_RSYNC,system/skeleton-net,$(TARGET_DIR))
+endef
+
 define SKELETON_SYSV_SET_NETWORK
 	mkdir -p $(TARGET_DIR)/etc/network/
 	$(SKELETON_SET_NETWORK_IFUPDOWN_LOOPBACK)
