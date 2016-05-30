@@ -4,16 +4,14 @@
 #
 ################################################################################
 
-SKELETON_DEPENDENCIES = \
-	$(if $(BR2_PACKAGE_SKELETON_SYSV),skeleton-sysv) \
-	$(if $(BR2_PACKAGE_SKELETON_CUSTOM),skeleton-custom)
-
 # The skeleton can't depend on the toolchain, since all packages depends on the
 # skeleton and the toolchain is a target package, as is skeleton.
 # Hence, skeleton would depends on the toolchain and the toolchain would depend
 # on skeleton.
 SKELETON_ADD_TOOLCHAIN_DEPENDENCY = NO
 SKELETON_ADD_SKELETON_DEPENDENCY = NO
+
+$(eval $(virtual-package))
 
 # The following definitions are to be used by the specific skeletons:
 # - SKELETON_USR_SYMLINKS_OR_DIRS
@@ -110,5 +108,3 @@ endif
 else # !BR2_TARGET_ENABLE_ROOT_LOGIN
 SKELETON_ROOT_PASSWORD = "*"
 endif
-
-$(eval $(generic-package))

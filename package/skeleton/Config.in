@@ -1,7 +1,16 @@
+# Every packages depend on the 'skeleton' package, but noone selects its
+# symbol since it is an implicit dependency. So we just force that symbol
+# to always be 'y' so that it does appear in the dependency graph. Just
+# for that, no kidding.
 config BR2_PACKAGE_SKELETON
 	bool
 	default y
-	select BR2_PACKAGE_SKELETON_SYSV   if BR2_ROOTFS_SKELETON_DEFAULT
-	select BR2_PACKAGE_SKELETON_CUSTOM if BR2_ROOTFS_SKELETON_CUSTOM
 	help
 	  The basic skeleton for your rootfs.
+
+config BR2_PACKAGE_HAS_SKELETON
+	bool
+
+config BR2_PACKAGE_PROVIDES_SKELETON
+	string
+	depends on BR2_PACKAGE_HAS_SKELETON
