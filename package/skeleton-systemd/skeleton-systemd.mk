@@ -36,12 +36,59 @@ ifeq ($(SKELETON_SYSTEMD_LOCALTIME),)
 SKELETON_SYSTEMD_LOCALTIME = Etc/UTC
 endif
 
+ifeq ($(BR2_TARGET_GENERIC_REMOUNT_ROOTFS_RW),y)
+
+define SKELETON_SYSTEMD_ROOT_RW
+	echo "/dev/root / auto rw 0 1" >$(TARGET_DIR)/etc/fstab
+	mkdir -p $(TARGET_DIR)/var
+endef
+
+else
+
+# On a R/O rootfs, /var is a tmpfs filesystem. So, at build time, we
+# redirect /var to the "factory settings" location. Just before the
+# filesystem gets created, the /var symlink will be replaced with
+# a real (but empty) directory, and the "factory files" will be copied
+# back there by the tmpfiles.d mechanism.
+define SKELETON_SYSTEMD_ROOT_RO
+	mkdir -p $(TARGET_DIR)/etc/systemd/tmpfiles.d
+	mkdir -p $(TARGET_DIR)/usr/share/factory
+	ln -s usr/share/factory $(TARGET_DIR)/var
+	echo "/dev/root / auto ro 0 1" >$(TARGET_DIR)/etc/fstab
+	echo "tmpfs /var tmpfs mode=1777 0 0" >>$(TARGET_DIR)/etc/fstab
+endef
+
+define SKELETON_SYSTEMD_VAR_PRE_FS
+	rm -f $(TARGET_DIR)/var
+	mkdir $(TARGET_DIR)/var
+	for i in $(TARGET_DIR)/usr/share/factory/*; do \
+		j="$${i##*/}"; \
+		if [ -L "$${i}" ]; then \
+			printf "L+! /var/%s - - - - %s\n" \
+				"$${j}" "../usr/share/factory/$${j}" \
+			|| exit 1; \
+		else \
+			printf "C! /var/%s - - - -\n" "$${j}" \
+			|| exit 1; \
+		fi; \
+	done >$(TARGET_DIR)/etc/systemd/tmpfiles.d/var-factory.conf
+endef
+SKELETON_SYSTEMD_FS_PRE_CMD_HOOKS += SKELETON_SYSTEMD_VAR_PRE_FS
+
+define SKELETON_SYSTEMD_VAR_POST_FS
+	rm -rf $(TARGET_DIR)/var
+	ln -s usr/share/factory $(TARGET_DIR)/var
+endef
+SKELETON_SYSTEMD_FS_POST_CMD_HOOKS += SKELETON_SYSTEMD_VAR_POST_FS
+
+endif
+
 define SKELETON_SYSTEMD_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/etc
 	mkdir -p $(TARGET_DIR)/home
 	mkdir -p $(TARGET_DIR)/srv
-	mkdir -p $(TARGET_DIR)/var
-	echo "/dev/root / auto rw 0 1" >$(TARGET_DIR)/etc/fstab
+	$(SKELETON_SYSTEMD_ROOT_RO)
+	$(SKELETON_SYSTEMD_ROOT_RW)
 	ln -sf ../usr/share/zoneinfo/$(SKELETON_SYSTEMD_LOCALTIME) \
 		$(TARGET_DIR)/etc/localtime
 	$(SKELETON_SYSTEMD_RSYNC_NETWORK)
