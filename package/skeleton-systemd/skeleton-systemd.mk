@@ -15,7 +15,17 @@ SKELETON_SYSTEMD_ADD_SKELETON_DEPENDENCY = NO
 
 # In case we're not using systemd-networkd, use the sysv-like network infra;
 # otherwise, the necessary bits are installed by the systemd package.
-ifeq ($(BR2_PACKAGE_SYSTEMD_NETWORKD),)
+ifeq ($(BR2_PACKAGE_SYSTEMD_NETWORKD),y)
+
+define SKELETON_SYSTEMD_SET_NETWORK
+	mkdir -p $(TARGET_DIR)/etc/systemd/network
+	printf '[Match]\nName=%s\n[Network]\nDHCP=yes\n' \
+		$(SKELETON_NETWORK_DHCP_IFACE) \
+		>$(TARGET_DIR)/etc/systemd/network/$(SKELETON_NETWORK_DHCP_IFACE).network
+endef
+SKELETON_SYSTEMD_TARGET_FINALIZE_HOOKS += SKELETON_SYSTEMD_SET_NETWORK
+
+else # BR2_PACKAGE_SYSTEMD_NETWORKD is not set
 
 define SKELETON_SYSTEMD_RSYNC_NETWORK
 	 $(call SKELETON_RSYNC,system/skeleton-net,$(TARGET_DIR))
