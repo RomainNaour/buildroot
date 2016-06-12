@@ -31,12 +31,19 @@ SKELETON_SYSTEMD_TARGET_FINALIZE_HOOKS += SKELETON_SYSTEMD_SET_NETWORK
 
 endif # BR2_PACKAGE_SYSTEMD_NETWORKD not set
 
+SKELETON_SYSTEMD_LOCALTIME = $(call qstrip,$(BR2_TARGET_LOCALTIME))
+ifeq ($(SKELETON_SYSTEMD_LOCALTIME),)
+SKELETON_SYSTEMD_LOCALTIME = Etc/UTC
+endif
+
 define SKELETON_SYSTEMD_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/etc
 	mkdir -p $(TARGET_DIR)/home
 	mkdir -p $(TARGET_DIR)/srv
 	mkdir -p $(TARGET_DIR)/var
 	echo "/dev/root / auto rw 0 1" >$(TARGET_DIR)/etc/fstab
+	ln -sf ../usr/share/zoneinfo/$(SKELETON_SYSTEMD_LOCALTIME) \
+		$(TARGET_DIR)/etc/localtime
 	$(SKELETON_SYSTEMD_RSYNC_NETWORK)
 endef
 
