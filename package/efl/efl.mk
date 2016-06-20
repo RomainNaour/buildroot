@@ -205,6 +205,12 @@ EFL_CONF_OPTS += --enable-drm
 EFL_DEPENDENCIES += libdrm libegl mesa3d
 endif
 
+ifeq ($(BR2_PACKAGE_EFL_GL_DRM),y)
+EFL_CONF_OPTS += --enable-gl-drm
+else
+EFL_CONF_OPTS += --disable-gl-drm
+endif
+
 # Loaders that need external dependencies needs to be --enable-XXX=yes
 # otherwise the default is '=static'.
 # All other loaders are statically built-in
