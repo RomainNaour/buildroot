@@ -209,6 +209,16 @@ comment "Evas DRM Engine needs mesa3d w/ EGL support, threads, Wayland"
 		|| !BR2_PACKAGE_WAYLAND
 	depends on BR2_PACKAGE_EFL_ELPUT
 
+config BR2_PACKAGE_EFL_GL_DRM
+	bool "Evas GL DRM Engine"
+	depends on BR2_PACKAGE_EFL_DRM
+	depends on BR2_PACKAGE_EFL_OPENGLES # OpenGL ES with EGL support only
+	help
+	  This option enable building support for the Evas DRM Engine.
+
+comment "Evas GL DRM Engine needs Evas DRM Engine, OpenGL ES w/ EGL"
+	depends on BR2_PACKAGE_EFL_DRM && !BR2_PACKAGE_EFL_OPENGLES
+
 comment "libevas loaders"
 
 config BR2_PACKAGE_EFL_PNG
