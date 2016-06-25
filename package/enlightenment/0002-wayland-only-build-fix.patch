@@ -1,0 +1,26 @@
+From 3b086017f822e80279760b8b718b7212163b9a34 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Sat, 20 Aug 2016 20:45:49 +0200
+Subject: [PATCH] wayland only build fix
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 7608181..9c40457 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -700,7 +700,7 @@ fi
+ AM_CONDITIONAL([HAVE_WAYLAND], [test "x${have_wayland}" = "xyes"])
+ AM_CONDITIONAL([HAVE_WAYLAND_EGL], [test "x${have_wayland_egl}" = "xyes"])
+ 
+-if test "x${have_wayland_only}" != "xyes"; then
++if test "x${e_cv_want_wayland_only}" != "xyes"; then
+   PKG_CHECK_MODULES([ECORE_X], [ecore-x >= ${efl_version}])
+   if test -n "$ECORE_X_CFLAGS" ; then
+      ecore_x=true
+-- 
+2.5.5
+

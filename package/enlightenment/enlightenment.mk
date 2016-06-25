@@ -10,11 +10,13 @@ ENLIGHTENMENT_SITE = http://download.enlightenment.org/rel/apps/enlightenment
 ENLIGHTENMENT_LICENSE = BSD-2c
 ENLIGHTENMENT_LICENSE_FILES = COPYING
 
+ENLIGHTENMENT_AUTORECONF = YES
+ENLIGHTENMENT_GETTEXTIZE = YES
+
 ENLIGHTENMENT_DEPENDENCIES = \
 	host-pkgconf \
 	host-efl \
-	efl \
-	xcb-util-keysyms
+	efl
 
 ENLIGHTENMENT_CONF_OPTS = \
 	--with-edje-cc=$(HOST_DIR)/usr/bin/edje_cc \
@@ -27,6 +29,20 @@ ENLIGHTENMENT_CONF_OPTS += --enable-systemd
 ENLIGHTENMENT_DEPENDENCIES += systemd
 else
 ENLIGHTENMENT_CONF_OPTS += --disable-systemd
+endif
+
+ifeq ($(BR2_PACKAGE_ENLIGHTENMENT_WAYLAND),y)
+ENLIGHTENMENT_CONF_OPTS += --enable-wayland --enable-wayland-egl \
+	--disable-xwayland \
+	--enable-wl-drm \
+	--enable-wl-desktop-shell
+ENLIGHTENMENT_DEPENDENCIES += wayland
+else
+ENLIGHTENMENT_CONF_OPTS += --disable-wayland
+endif
+
+ifeq ($(BR2_PACKAGE_XORG7),y)
+ENLIGHTENMENT_DEPENDENCIES += xcb-util-keysyms
 endif
 
 # uClibc has an old incomplete sys/ptrace.h for powerpc & sparc
