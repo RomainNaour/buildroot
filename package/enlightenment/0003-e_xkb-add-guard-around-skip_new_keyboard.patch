@@ -1,0 +1,37 @@
+From 98db6403aef4c896d8197b26c8b155f934820ccd Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Sat, 20 Aug 2016 22:39:34 +0200
+Subject: [PATCH] e_xkb: add guard around skip_new_keyboard
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+skip_new_keyboard is not available if HAVE_WAYLAND_ONLY is defined.
+
+Fixes:
+src/bin/e_xkb.c: Dans la fonction ‘_e_x_xkb_reconfig’:
+src/bin/e_xkb.c:216:4: erreur : ‘skip_new_keyboard’ undeclared (first use in this function)
+    skip_new_keyboard ++;
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ src/bin/e_xkb.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/bin/e_xkb.c b/src/bin/e_xkb.c
+index 0aa1782..3412c53 100644
+--- a/src/bin/e_xkb.c
++++ b/src/bin/e_xkb.c
+@@ -213,7 +213,9 @@ _e_x_xkb_reconfig(void)
+                }
+           }
+      }
++#ifndef HAVE_WAYLAND_ONLY
+    skip_new_keyboard ++;
++#endif
+    INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
+    ecore_exe_run(eina_strbuf_string_get(buf), NULL);
+    eina_strbuf_free(buf);
+-- 
+2.5.5
+
