@@ -868,6 +868,8 @@ savedefconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
 		$(CONFIG_CONFIG_IN)
 	@$(SED) '/BR2_DEFCONFIG=/d' $(if $(DEFCONFIG),$(DEFCONFIG),$(CONFIG_DIR)/defconfig)
 
+include $(BR2_EXTERNAL)/external-defconfig.mk
+
 .PHONY: defconfig savedefconfig
 
 ################################################################################
