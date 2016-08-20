@@ -185,6 +185,15 @@ comment "OpenGL ES support needs an OpenGL ES w/ EGL provider"
 
 endchoice # OpenGL support
 
+config BR2_PACKAGE_EFL_ELPUT
+	bool "Elput"
+	select BR2_PACKAGE_LIBINPUT
+	help
+	  The elput library is an efl abstraction for the libinput library
+	  which can be used by various other subsystems (ecore_fb,
+	  ecore_drm, etc) to handle interfacing with libinput without
+	  having to duplicate the code in each subsystem.
+
 comment "libevas loaders"
 
 config BR2_PACKAGE_EFL_PNG
