@@ -17,6 +17,11 @@ EFL_LICENSE_FILES = \
 	licenses/COPYING.LGPL \
 	licenses/COPYING.SMALL
 
+# Regenerate the autotools:
+#  - to fix an issue in with wayland only build.
+EFL_AUTORECONF = YES
+EFL_GETTEXTIZE = YES
+
 EFL_INSTALL_STAGING = YES
 
 EFL_DEPENDENCIES = host-pkgconf host-efl host-luajit dbus freetype \

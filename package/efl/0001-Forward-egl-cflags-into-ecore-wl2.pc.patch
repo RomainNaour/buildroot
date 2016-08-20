@@ -1,0 +1,35 @@
+From a2d9afc1e252a33dbbdb5ed098c201c6284f3e14 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Sat, 20 Aug 2016 21:51:49 +0200
+Subject: [PATCH] Forward egl cflags into ecore-wl2.pc
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fixes:
+In file included from /usr/include/EGL/egl.h:39:0,
+                 from ./src/bin/e.h:108,
+                 from src/modules/mixer/lib/backends/pulseaudio/pulse.c:1:
+/usr/include/EGL/eglplatform.h:119:22: erreur fatale : X11/Xlib.h
+
+Fixes suggested by Gustavo Zacarias
+https://git.busybox.net/buildroot/tree/package/libepoxy/0005-Forward-egl-cflags-into-epoxy.pc.patch
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ pc/ecore-wl2.pc.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pc/ecore-wl2.pc.in b/pc/ecore-wl2.pc.in
+index 8f600b8..35e6199 100644
+--- a/pc/ecore-wl2.pc.in
++++ b/pc/ecore-wl2.pc.in
+@@ -9,4 +9,4 @@ Requires.private: @requirements_pc_ecore_wl2@
+ Version: @VERSION@
+ Libs: -L${libdir} -lecore_wl2
+ Libs.private: @requirements_libs_ecore_wl2@
+-Cflags: -I${includedir}/efl-@VMAJ@ -I${includedir}/ecore-wl2-@VMAJ@
++Cflags: -I${includedir}/efl-@VMAJ@ -I${includedir}/ecore-wl2-@VMAJ@ @WAYLAND_EGL_CFLAGS@
+-- 
+2.5.5
+
