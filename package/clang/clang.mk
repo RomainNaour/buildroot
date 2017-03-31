@@ -12,6 +12,8 @@ CLANG_LICENSE_FILES = LICENSE.TXT
 
 HOST_CLANG_DEPENDENCIES = host-llvm host-libxml2
 
+CLANG_DEPENDENCIES = host-llvm host-libxml2 llvm
+
 CLANG_SUPPORTS_IN_SOURCE_BUILD = NO
 
 # * LLVM_INSTALL_TOOLCHAIN_ONLY
@@ -35,6 +37,12 @@ HOST_CLANG_CONF_OPTS += -DLLVM_INCLUDE_TESTS=OFF \
 	-DCLANG_VENDOR=$(TARGET_VENDOR) \
 	-DCLANG_VENDOR_UTI="http://bugs.buildroot.net/"
 
+CLANG_CONF_OPTS += -DLLVM_INCLUDE_TESTS=OFF \
+	-DCLANG_INCLUDE_TESTS=OFF \
+	-DCLANG_BUILD_EXAMPLES=OFF \
+	-DCLANG_VENDOR=$(TARGET_VENDOR) \
+	-DCLANG_VENDOR_UTI="http://bugs.buildroot.net/"
+
 # We need to set a proper RPATH otherwise the build stop on the RPATH check:
 # *** ERROR: package host-clang installs executables without proper RPATH
 # output/host/usr/bin/c-index-test
@@ -44,4 +52,8 @@ HOST_CLANG_CONF_OPTS += -DLLVM_INCLUDE_TESTS=OFF \
 HOST_CLANG_CONF_ENV += \
 	LDFLAGS="$(HOST_LDFLAGS) -L${HOST_DIR}/usr/lib -Wl,-rpath,${HOST_DIR}/usr/lib"
 
+CLANG_CONF_ENV += \
+	LDFLAGS="$(LDFLAGS) -L${STAGING_DIR}/usr/lib -Wl,-rpath,${STAGING_DIR}/usr/lib"
+
 $(eval $(host-cmake-package))
+$(eval $(cmake-package))
