@@ -37,11 +37,23 @@ HOST_CLANG_CONF_OPTS += -DLLVM_INCLUDE_TESTS=OFF \
 	-DCLANG_VENDOR=$(TARGET_VENDOR) \
 	-DCLANG_VENDOR_UTI="http://bugs.buildroot.net/"
 
+CLANG_CONF_ENV += LLVM_CONFIG=$(STAGING_DIR)/usr/bin/llvm-config
+
 CLANG_CONF_OPTS += -DLLVM_INCLUDE_TESTS=OFF \
 	-DCLANG_INCLUDE_TESTS=OFF \
 	-DCLANG_BUILD_EXAMPLES=OFF \
+	-DCLANG_BUILD_TOOLS=OFF \
+	-DCLANG_INCLUDE_TESTS=OFF \
+	-DCLANG_TABLEGEN=$(HOST_DIR)/usr/bin/llvm-tblgen \
 	-DCLANG_VENDOR=$(TARGET_VENDOR) \
 	-DCLANG_VENDOR_UTI="http://bugs.buildroot.net/"
+
+#	-DLLVM_TOOLS_BINARY_DIR=$(HOST_DIR)/usr/bin \
+	-DLLVM_LIBRARY_DIR=$(STAGING_DIR)/usr/lib \
+	-DLLVM_MAIN_INCLUDE_DIR=$(STAGING_DIR)/usr/include \
+	-DLLVM_MAIN_SRC_DIR=$(LLVM_DIR)/buildroot-build \
+	-DLLVM_BINARY_DIR=$(STAGING_DIR)/usr \
+	-DLLVM_TABLEGEN_EXE=$(HOST_DIR)/usr/bin/llvm-tblgen
 
 # We need to set a proper RPATH otherwise the build stop on the RPATH check:
 # *** ERROR: package host-clang installs executables without proper RPATH
