@@ -216,4 +216,16 @@ else
 MESA3D_CONF_OPTS += --disable-lmsensors
 endif
 
+# libclc (Clover) requires libelf
+ifeq ($(BR2_PACKAGE_ELFUTILS),y)
+MESA3D_DEPENDENCIES += elfutils
+endif
+
+ifeq ($(BR2_PACKAGE_MESA3D_OPENCL),y)
+MESA3D_DEPENDENCIES += libclc
+MESA3D_CONF_OPTS += --enable-opencl
+else
+MESA3D_CONF_OPTS += --disable-opencl
+endif
+
 $(eval $(autotools-package))
