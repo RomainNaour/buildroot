@@ -1,4 +1,4 @@
 # Locally calculated after checking pgp signature (glibc)
-sha256	e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd	glibc-2.26.tar.xz
+sha256  f2b16cd7e2d0db6c144e8c008ac0d3f4d702c516f236041dbfc5c955ec4eb55d     glibc-glibc-2.26-65-ga76376df7c07e577a9515c3faa5dbd50bda5da07.tar.gz
 # Locally calculated (fetched from Github)
 sha256  adf2dd19a76705a6fb748492eba30cb0be621422190116382a891a3cf099e895     glibc-arc-2017.09-eng010.tar.gz
