@@ -9,9 +9,11 @@ GLIBC_VERSION =  arc-2017.09-eng010
 GLIBC_SITE = $(call github,foss-for-synopsys-dwc-arc-processors,glibc,$(GLIBC_VERSION))
 GLIBC_SOURCE = glibc-$(GLIBC_VERSION).tar.gz
 else
-GLIBC_VERSION = 2.26
-GLIBC_SITE = $(BR2_GNU_MIRROR)/libc
-GLIBC_SOURCE = glibc-$(GLIBC_VERSION).tar.xz
+# Generate version string using:
+#   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master
+GLIBC_VERSION = glibc-2.26-65-ga76376df7c07e577a9515c3faa5dbd50bda5da07
+GLIBC_SITE = https://sourceware.org/git/glibc.git
+GLIBC_SITE_METHOD = git
 endif
 
 GLIBC_SRC_SUBDIR = .
