@@ -12,7 +12,7 @@ else
 # Generate version string using:
 #   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master
 GLIBC_VERSION = glibc-2.26-65-ga76376df7c07e577a9515c3faa5dbd50bda5da07
-GLIBC_SITE = https://gitlab.com/ymorin/glibc.git
+GLIBC_SITE = http://sourceware.org/git/glibc.git
 GLIBC_SITE_METHOD = git
 endif
 
