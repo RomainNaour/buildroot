@@ -1,0 +1,40 @@
+From 58a9bd43e6b068f9b29982a2fe688d0ed34a8663 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Tue, 22 Jan 2019 22:18:02 +0100
+Subject: [PATCH] Makefile: fix build with Binutils 2.32
+
+Binutils added bfd_stdint.h to bfd.h [1], so elf2flt must create a
+symlink for this header.
+
+Fixes:
+[armv7m-uclibc]
+https://gitlab.com/kubu93/toolchains-builder/-/jobs/148356410
+
+[m68k-coldfire-uclibc]
+https://gitlab.com/kubu93/toolchains-builder/-/jobs/148356412
+
+[1] https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=commitdiff;h=2d5d5a8f0a8b5a03454bf168b7fa7024bb1ebbd8
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ Makefile.in | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 164e306..57fff5c 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -126,7 +126,9 @@ sinclude .deps
+ bfd-headers/.stamp:
+ 	rm -rf bfd-headers
+ 	mkdir bfd-headers
+-	ln -sf $(BFD_INCLUDE_DIR)/bfd.h bfd-headers/bfd.h
++	for f in bfd bfd_stdint; do \
++		ln -sf $(BFD_INCLUDE_DIR)/$$f.h bfd-headers/$$f.h || exit 1; \
++	done
+ 	for f in ansidecl diagnostics filenames hashtab libiberty symcat; do \
+ 		ln -sf $(BINUTILS_INCLUDE_DIR)/$$f.h bfd-headers/$$f.h || exit 1; \
+ 	done
+-- 
+2.14.5
+
