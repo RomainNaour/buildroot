@@ -20,7 +20,7 @@ else ifeq ($(BR2_csky),y)
 GCC_SITE = $(call github,c-sky,gcc,$(GCC_VERSION))
 GCC_SOURCE = gcc-$(GCC_VERSION).tar.gz
 else
-GCC_SITE = $(BR2_GNU_MIRROR:/=)/gcc/gcc-$(GCC_VERSION)
+GCC_SITE = http://ftp.igh.cnrs.fr/pub/gnu/gcc/gcc-$(GCC_VERSION)
 GCC_SOURCE = gcc-$(GCC_VERSION).tar.xz
 endif
 
