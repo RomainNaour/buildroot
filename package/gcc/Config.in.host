@@ -60,8 +60,7 @@ config BR2_GCC_VERSION_8_X
 config BR2_GCC_VERSION_9_X
 	bool "gcc 9.x"
 	# or1k needs binutils >= 2.32
-	depends on !(BR2_or1k && \
-		(BR2_BINUTILS_VERSION_2_30_X || BR2_BINUTILS_VERSION_2_31_X))
+	depends on !(BR2_or1k && BR2_BINUTILS_VERSION_2_31_X)
 	# uClibc doesn't build with upstream or1k gcc
 	# https://mailman.uclibc-ng.org/pipermail/devel/2019-August/001885.html
 	depends on !(BR2_or1k && BR2_TOOLCHAIN_USES_UCLIBC)
