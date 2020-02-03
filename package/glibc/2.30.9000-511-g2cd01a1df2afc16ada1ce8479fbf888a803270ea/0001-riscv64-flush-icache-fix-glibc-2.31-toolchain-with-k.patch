@@ -1,0 +1,32 @@
+From c8d1b8cc15754acf393d90b704b9acb96c587e30 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@smile.fr>
+Date: Mon, 3 Feb 2020 10:52:28 +0100
+Subject: [PATCH] riscv64/flush-icache: fix glibc 2.31 toolchain with kernel
+ headers < 5.0
+
+https://sourceware.org/ml/libc-alpha/2020-02/msg00018.html
+
+Signed-off-by: Romain Naour <romain.naour@smile.fr>
+---
+ sysdeps/unix/sysv/linux/riscv/flush-icache.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/sysdeps/unix/sysv/linux/riscv/flush-icache.c b/sysdeps/unix/sysv/linux/riscv/flush-icache.c
+index 72caeb190f..ef33582bdf 100644
+--- a/sysdeps/unix/sysv/linux/riscv/flush-icache.c
++++ b/sysdeps/unix/sysv/linux/riscv/flush-icache.c
+@@ -21,11 +21,6 @@
+ #include <stdlib.h>
+ #include <atomic.h>
+ #include <sys/cachectl.h>
+-#if __has_include (<asm/syscalls.h>)
+-# include <asm/syscalls.h>
+-#else
+-# include <asm/unistd.h>
+-#endif
+ #include <sys/syscall.h>
+ 
+ typedef int (*func_type) (void *, void *, unsigned long int);
+-- 
+2.24.1
+
