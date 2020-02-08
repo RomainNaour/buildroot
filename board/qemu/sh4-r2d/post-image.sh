@@ -19,7 +19,8 @@ if [ -f $README_FILE ]; then
         # Remove -serial stdio if present
         QEMU_CMD_LINE=${QEMU_CMD_LINE//-serial stdio/}
         # Disable graphical output and redirect serial I/Os to console
-        QEMU_CMD_LINE="$QEMU_CMD_LINE -nographic"
+        # Special case for SH4
+        QEMU_CMD_LINE="$QEMU_CMD_LINE -serial stdio -display none"
     fi
     cat << EOF > $START_QEMU_SCRIPT
 #!/bin/sh
