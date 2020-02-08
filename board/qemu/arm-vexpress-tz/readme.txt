@@ -12,7 +12,7 @@ QEMU platform is quite specific for that in TF-A and one needs to
 run the emulation from the image directory for TF-A to boot the
 secure and non-secure worlds.
 
-  cd output/images && ../host/bin/qemu-system-arm \
+qemu_arm_vexpress_tz_defconfig: qemu-system-arm \
 	-machine virt -machine secure=on -cpu cortex-a15 \
 	-smp 1 -s -m 1024 -d unimp \
 	-serial stdio \
