@@ -1,11 +1,17 @@
 #!/bin/bash
 
 BOARD_DIR="$(dirname $0)"
+DEFCONFIG_NAME="$(basename $2)"
 README_FILE="${BOARD_DIR}/readme.txt"
 START_QEMU_SCRIPT="${BINARIES_DIR}/start-qemu.sh"
 
+# if [[ "${f}" =~ ^"${ignore}" ]]; then
+if [[ "${DEFCONFIG_NAME}" =~ ^"qemu_*" ]]; then
+    # Not a Qemu defconfig, can't test.
+    return
+fi
+
 if [ -f $README_FILE ]; then
-    DEFCONFIG_NAME=$(cat $README_FILE | sed -r '/^.*: /!d; :a; /\\$/N; ta; s/:.*$//')
     QEMU_CMD_LINE=$(cat $README_FILE | sed -r "/^${DEFCONFIG_NAME}: /!d; :a; /\\$/N; s/\\\n//; ta; s/^[^:]+://")
     QEMU_CMD_LINE=${QEMU_CMD_LINE//output\/images/\${IMAGE_DIR\}}
     # Test if we are running in gitlab
