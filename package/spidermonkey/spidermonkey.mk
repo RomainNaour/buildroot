@@ -21,7 +21,8 @@ SPIDERMONKEY_DEPENDENCIES = \
 	zlib
 
 SPIDERMONKEY_CONF_ENV = \
-	PYTHON="$(HOST_DIR)/bin/python2"
+	PYTHON="$(HOST_DIR)/bin/python2" \
+	ac_cv_clock_monotonic=rt
 
 # spidermonkey mixes up target and host.
 # spidermonkey does not allow building against a system jemalloc,
