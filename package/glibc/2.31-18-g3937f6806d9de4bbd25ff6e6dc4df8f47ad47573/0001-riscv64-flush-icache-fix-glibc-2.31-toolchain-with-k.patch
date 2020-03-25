@@ -1,0 +1,51 @@
+From 5142becd7662fea48c1313364dadc4c17e0e4fb6 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@smile.fr>
+Date: Wed, 25 Mar 2020 11:25:23 +0100
+Subject: [PATCH] riscv64/flush-icache: fix glibc 2.31 toolchain with kernel
+ headers < 5.0
+
+Without this patch, the risc64 port needs at least a kernel headers >= 5.0
+
+Otherwise glibc fail to build with:
+
+../sysdeps/unix/sysv/linux/riscv/rv64/arch-syscall.h:193:33: error: expected
+declaration specifiers or '...' before numeric constant
+  193 | #define __NR_riscv_flush_icache 259
+      |                                 ^~~
+In file included from ../sysdeps/unix/sysv/linux/riscv/flush-icache.c:25:
+/home/naourr/buildroot/test/toolchain/host/riscv64-buildroot-linux-gnu/sysroot/usr/include/asm/syscalls.h:29:36:
+error: unknown type name 'sys_riscv_flush_icache'
+   29 | __SYSCALL(__NR_riscv_flush_icache, sys_riscv_flush_icache)
+      |                                    ^~~~~~~~~~~~~~~~~~~~~~
+
+See: https://gitlab.com/kubu93/toolchains-builder/-/jobs/422726962
+
+The syscalls.h header wasn't originally written as a UAPI header, including
+<sys/syscall.h> should now be sufficient.
+
+https://sourceware.org/ml/libc-alpha/2020-02/msg00018.html
+
+Signed-off-by: Romain Naour <romain.naour@smile.fr>
+---
+ sysdeps/unix/sysv/linux/riscv/flush-icache.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/sysdeps/unix/sysv/linux/riscv/flush-icache.c b/sysdeps/unix/sysv/linux/riscv/flush-icache.c
+index 72caeb190f..ef33582bdf 100644
+--- a/sysdeps/unix/sysv/linux/riscv/flush-icache.c
++++ b/sysdeps/unix/sysv/linux/riscv/flush-icache.c
+@@ -21,11 +21,6 @@
+ #include <stdlib.h>
+ #include <atomic.h>
+ #include <sys/cachectl.h>
+-#if __has_include (<asm/syscalls.h>)
+-# include <asm/syscalls.h>
+-#else
+-# include <asm/unistd.h>
+-#endif
+ #include <sys/syscall.h>
+ 
+ typedef int (*func_type) (void *, void *, unsigned long int);
+-- 
+2.21.1
+
