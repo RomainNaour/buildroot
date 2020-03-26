@@ -27,6 +27,7 @@
 #   modify packages that use this infrastructure.
 
 N:	Adam Duskett <aduskett@gmail.com>
+F:	configs/mender_x86_64_efi_defconfig
 F:	package/audit/
 F:	package/busybox/
 F:	package/checkpolicy/
