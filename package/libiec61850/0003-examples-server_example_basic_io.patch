@@ -1,0 +1,45 @@
+From 920cc1d86ad13c818f19ff630093be606585d454 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@smile.fr>
+Date: Thu, 7 May 2020 09:16:14 +0200
+Subject: [PATCH] examples/server_example_basic_io
+
+There is an access error while using iec61850_client_example1 with server_example_basic_io.
+
+From [1]:
+    /* write a variable to the server */
+    value = MmsValue_newVisibleString("libiec61850.com");
+    IedConnection_writeObject(con, &error, "simpleIOGenericIO/GGIO1.NamPlt.vendor", IEC61850_FC_DC, value);
+
+The error code is IED_ERROR_ACCESS_DENIED = 21.
+
+By default access to variables with FC=DC and FC=CF is not allowed, fix this
+by changing the access policy as suggested by [2].
+
+[1] https://github.com/mz-automation/libiec61850/blob/v1.4.2.1/examples/iec61850_client_example1/client_example1.c#L71
+[2] https://libiec61850.com/libiec61850/documentation/iec-61850-client-tutorial/#comment-61994
+
+Signed-off-by: Romain Naour <romain.naour@smile.fr>
+---
+ examples/server_example_basic_io/server_example_basic_io.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/examples/server_example_basic_io/server_example_basic_io.c b/examples/server_example_basic_io/server_example_basic_io.c
+index 4966f33..d2fc927 100644
+--- a/examples/server_example_basic_io/server_example_basic_io.c
++++ b/examples/server_example_basic_io/server_example_basic_io.c
+@@ -136,6 +136,12 @@ main(int argc, char** argv)
+ 
+     IedServer_setConnectionIndicationHandler(iedServer, (IedConnectionIndicationHandler) connectionHandler, NULL);
+ 
++    /* By default access to variables with FC=DC and FC=CF is not allowed.
++     * This allow to write to simpleIOGenericIO/GGIO1.NamPlt.vendor variable used
++     * by iec61850_client_example1.
++     */
++    IedServer_setWriteAccessPolicy(iedServer, IEC61850_FC_DC, ACCESS_POLICY_ALLOW);
++
+     /* MMS server will be instructed to start listening for client connections. */
+     IedServer_start(iedServer, 102);
+ 
+-- 
+2.21.3
+
