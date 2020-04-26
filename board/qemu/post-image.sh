@@ -27,6 +27,9 @@ QEMU_CMD_LINE="${QEMU_CMD_LINE//output\/images/\${IMAGE_DIR\}}"
 DEFAULT_ARGS="$(sed -r -e '/-serial stdio/!d; s/.*(-serial stdio).*/\1/' <<<"${QEMU_CMD_LINE}")"
 QEMU_CMD_LINE="${QEMU_CMD_LINE//-serial stdio/}"
 
+# Escape -append double quotes
+QEMU_CMD_LINE=$(echo ${QEMU_CMD_LINE} | sed "s%\"%\\\\\"%g")
+
 # Disable graphical output and redirect serial I/Os to console
 case ${DEFCONFIG_NAME} in
   (qemu_sh4eb_r2d_defconfig|qemu_sh4_r2d_defconfig)
@@ -49,7 +52,7 @@ cat <<-_EOF_ > "${START_QEMU_SCRIPT}"
 	fi
 
 	export PATH="${HOST_DIR}/bin:\${PATH}"
-	exec ${QEMU_CMD_LINE} \${EXTRA_ARGS}
+	exec sh -c "${QEMU_CMD_LINE} \${EXTRA_ARGS}"
 _EOF_
 
 chmod +x "${START_QEMU_SCRIPT}"
