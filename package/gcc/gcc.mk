@@ -17,8 +17,14 @@ else ifeq ($(BR2_GCC_VERSION_CSKY),y)
 GCC_SITE = $(call github,c-sky,gcc,$(GCC_VERSION))
 GCC_SOURCE = gcc-$(GCC_VERSION).tar.gz
 else
+ifeq ($(BR2_GCC_IS_SNAPSHOTS),y)
+# ftp://ftp.irisa.fr/pub/mirrors/gcc.gnu.org/gcc/snapshots/10-20190505/gcc-10-20190505.tar.xz
+GCC_SITE = ftp://ftp.irisa.fr/pub/mirrors/gcc.gnu.org/gcc/snapshots/$(GCC_VERSION)
+GCC_SOURCE = gcc-$(GCC_VERSION).tar.xz
+else
 GCC_SITE = $(BR2_GNU_MIRROR:/=)/gcc/gcc-$(GCC_VERSION)
 GCC_SOURCE = gcc-$(GCC_VERSION).tar.xz
+endif
 endif
 
 #
