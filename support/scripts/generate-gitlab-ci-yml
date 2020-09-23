@@ -28,7 +28,7 @@ gen_tests() {
 
     basics=( DEVELOPERS flake8 package )
 
-    defconfigs=( $(cd configs; LC_ALL=C ls -1 *_defconfig) )
+    defconfigs=( $(cd configs; LC_ALL=C ls -1 qemu*_defconfig) )
 
     runtimes=( $(./support/testing/run-tests -l 2>&1 \
                  | sed -r -e '/^test_run \((.*)\).*/!d; s//\1/' \
