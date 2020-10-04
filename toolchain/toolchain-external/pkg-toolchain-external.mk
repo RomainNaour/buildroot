@@ -143,7 +143,7 @@ endif
 
 ifeq ($(BR2_TOOLCHAIN_HAS_FORTRAN),y)
 TOOLCHAIN_EXTERNAL_LIBS += libgfortran.so.*
-# fortran needs quadmath on x86 and x86_64
+# fortran needs quadmath on x86, x86_64, powerpc64(le).
 ifeq ($(BR2_TOOLCHAIN_HAS_LIBQUADMATH),y)
 TOOLCHAIN_EXTERNAL_LIBS += libquadmath.so*
 endif
