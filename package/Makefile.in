@@ -39,12 +39,18 @@ endif
 # Compute GNU_TARGET_NAME
 GNU_TARGET_NAME = $(ARCH)-$(TARGET_VENDOR)-$(TARGET_OS)-$(LIBC)$(ABI)
 
+ifeq ($(BR2_GNU_HURD),y)
+TARGET_OS = gnu
+# Hurd : i586-pc-gnu
+GNU_TARGET_NAME = $(ARCH)-$(TARGET_VENDOR)-$(TARGET_OS)
+else
 # FLAT binary format needs uclinux
 ifeq ($(BR2_BINFMT_FLAT),y)
 TARGET_OS = uclinux
 else
 TARGET_OS = linux
 endif
+endif # !Hurd
 
 ifeq ($(BR2_TOOLCHAIN_USES_UCLIBC),y)
 LIBC = uclibc

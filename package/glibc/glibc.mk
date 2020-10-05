@@ -39,8 +39,10 @@ GLIBC_ADD_TOOLCHAIN_DEPENDENCY = NO
 
 # Before glibc is configured, we must have the first stage
 # cross-compiler and the kernel headers
-GLIBC_DEPENDENCIES = host-gcc-initial linux-headers host-bison host-gawk \
-	$(BR2_MAKE_HOST_DEPENDENCY) $(BR2_PYTHON3_HOST_DEPENDENCY)
+GLIBC_DEPENDENCIES = host-gcc-initial host-bison host-gawk \
+	$(BR2_MAKE_HOST_DEPENDENCY) $(BR2_PYTHON3_HOST_DEPENDENCY) \
+	 $(if $(BR2_GNU_HURD),hurd-headers,linux-headers) \
+	 $(if $(BR2_GNU_HURD),host-mig)
 
 GLIBC_SUBDIR = build
 
@@ -138,7 +140,7 @@ define GLIBC_CONFIGURE_CMDS
 		--disable-werror \
 		--without-gd \
 		--enable-obsolete-rpc \
-		--enable-kernel=$(call qstrip,$(BR2_TOOLCHAIN_HEADERS_AT_LEAST)) \
+		$(if $(BR2_GNU_HURD),,--enable-kernel=$(call qstrip,$(BR2_TOOLCHAIN_HEADERS_AT_LEAST))) \
 		--with-headers=$(STAGING_DIR)/usr/include)
 	$(GLIBC_ADD_MISSING_STUB_H)
 endef

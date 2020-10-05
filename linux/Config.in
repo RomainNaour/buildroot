@@ -1,5 +1,8 @@
 menu "Kernel"
 
+choice
+	prompt "Linux or Hurd"
+
 config BR2_LINUX_KERNEL
 	bool "Linux Kernel"
 	select BR2_PACKAGE_HOST_KMOD # Unconditional, even if modules not enabled
@@ -7,6 +10,18 @@ config BR2_LINUX_KERNEL
 	help
 	  Enable this option if you want to build a Linux kernel for
 	  your embedded device
+
+config BR2_GNU_HURD
+	bool "Making Embedded Hurd (Meh)"
+	depends on BR2_i386 # i386 support only
+	depends on BR2_TOOLCHAIN_BUILDROOT # internal toolchain backend only
+	select BR2_ENABLE_LOCALE
+	select BR2_PACKAGE_HURD
+	select BR2_PACKAGE_GNUMACH
+	help
+	  Experimental support for GNU Hurd.
+
+endchoice
 
 if BR2_LINUX_KERNEL
 
