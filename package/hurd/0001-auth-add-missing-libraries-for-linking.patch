@@ -1,0 +1,426 @@
+From d45b09aadf310a287270a62f4cde47f70d4e0676 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Wed, 14 Oct 2020 21:52:04 +0200
+Subject: [PATCH] auth: add missing libraries for linking
+
+Fix two linking issue with auth.
+
+i686-buildroot-gnu/bin/ld: auth.o: undefined reference to symbol 'task_get_special_port'
+i686-buildroot-gnu/bin/ld: sysroot/lib/libmachuser.so.1: error adding symbols: DSO missing from command line
+
+i686-buildroot-gnu/bin/ld: auth.o: undefined reference to symbol 'startup_authinit'
+i686-buildroot-gnu/bin/ld: sysroot/lib/libhurduser.so.0.3: error adding symbols: DSO missing from command line
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ acpi/Makefile            | 2 +-
+ auth/Makefile            | 2 +-
+ boot/Makefile            | 2 +-
+ console-client/Makefile  | 2 +-
+ console/Makefile         | 2 +-
+ daemons/Makefile         | 1 +
+ devnode/Makefile         | 1 +
+ eth-multiplexer/Makefile | 2 +-
+ exec/Makefile            | 2 +-
+ fatfs/Makefile           | 2 +-
+ fstests/Makefile         | 1 +
+ ftpfs/Makefile           | 2 +-
+ hostmux/Makefile         | 2 +-
+ mach-defpager/Makefile   | 2 +-
+ nfs/Makefile             | 2 +-
+ nfsd/Makefile            | 2 +-
+ pci-arbiter/Makefile     | 2 +-
+ pfinet/Makefile          | 2 +-
+ pflocal/Makefile         | 2 +-
+ proc/Makefile            | 2 +-
+ procfs/Makefile          | 2 +-
+ shutdown/Makefile        | 2 +-
+ startup/Makefile         | 1 +
+ storeio/Makefile         | 2 +-
+ sutils/Makefile          | 1 +
+ term/Makefile            | 2 +-
+ tmpfs/Makefile           | 2 +-
+ trans/Makefile           | 2 +-
+ usermux/Makefile         | 2 +-
+ utils/Makefile           | 2 +-
+ 30 files changed, 30 insertions(+), 25 deletions(-)
+
+diff --git a/acpi/Makefile b/acpi/Makefile
+index f84f4b35..6144ad20 100644
+--- a/acpi/Makefile
++++ b/acpi/Makefile
+@@ -26,7 +26,7 @@ MIGSRCS        =
+ OBJS           = $(patsubst %.S,%.o,$(patsubst %.c,%.o, $(SRCS) $(MIGSRCS)))
+ 
+ HURDLIBS= fshelp ports shouldbeinlibc netfs iohelp ihash
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ target = acpi
+ 
+diff --git a/auth/Makefile b/auth/Makefile
+index b82de074..0dae4939 100644
+--- a/auth/Makefile
++++ b/auth/Makefile
+@@ -23,7 +23,7 @@ SRCS = auth.c
+ OBJS = auth.o authServer.o auth_replyUser.o
+ target = auth
+ HURDLIBS = ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ MIGSFLAGS = -imacros $(srcdir)/mig-mutate.h
+ 
+diff --git a/boot/Makefile b/boot/Makefile
+index e2eeb20b..dfb253b1 100644
+--- a/boot/Makefile
++++ b/boot/Makefile
+@@ -28,6 +28,6 @@ target = boot
+ MIGSFLAGS=-imacros $(srcdir)/mig-mutate.h -DHURD_DEFAULT_PAYLOAD_TO_PORT=1
+ io-MIGSFLAGS=-DREPLY_PORTS -DHURD_DEFAULT_PAYLOAD_TO_PORT=1
+ HURDLIBS = store shouldbeinlibc ihash
+-LDLIBS += -lpthread
++LDLIBS += -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/console-client/Makefile b/console-client/Makefile
+index e4d9504d..0dc3e88e 100644
+--- a/console-client/Makefile
++++ b/console-client/Makefile
+@@ -34,7 +34,7 @@ SRCS = $(CONSOLE_SRCS) \
+ VPATH += $(srcdir)/xkb
+ OBJS = $(addsuffix .o,$(basename $(notdir $(SRCS)))) kdioctlServer.o
+ HURDLIBS = cons ports netfs fshelp iohelp ihash shouldbeinlibc
+-LDLIBS = -ldl -lpthread $(libdaemon_LIBS)
++LDLIBS = -ldl -lpthread -lhurduser -lmachuser $(libdaemon_LIBS)
+ module-dir = $(libdir)/hurd/console
+ console-LDFLAGS = -Wl,-E
+ 
+diff --git a/console/Makefile b/console/Makefile
+index c2294070..e5e567ca 100644
+--- a/console/Makefile
++++ b/console/Makefile
+@@ -27,7 +27,7 @@ SRCS = console.c display.c pager.c input.c
+ MIGSTUBS = notifyServer.o tioctlServer.o fs_notifyUser.o
+ 
+ HURDLIBS = netfs fshelp iohelp pager ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ OBJS = $(sort $(SRCS:.c=.o) $(MIGSTUBS))
+ 
+ MIGSFLAGS += -imacros $(srcdir)/mutations.h
+diff --git a/daemons/Makefile b/daemons/Makefile
+index 6d030717..6e1e6e8f 100644
+--- a/daemons/Makefile
++++ b/daemons/Makefile
+@@ -28,6 +28,7 @@ SRCS = rc.sh runsystem.sh getty.c lmail.c console-run.c runttys.c \
+ installationdir = $(libexecdir)
+ 
+ HURDLIBS = fshelp ports shouldbeinlibc
++LDLIBS += -lhurduser -lmachuser
+ OBJS = $(SRCS:.c=.o)
+ getty-LDLIBS = -lutil
+ 
+diff --git a/devnode/Makefile b/devnode/Makefile
+index 0964f8d4..92de5268 100644
+--- a/devnode/Makefile
++++ b/devnode/Makefile
+@@ -26,5 +26,6 @@ MIGSTUBS = deviceServer.o notifyServer.o
+ MIGSFLAGS = -imacros $(srcdir)/mig-mutate.h
+ device-MIGSFLAGS="-DMACH_PAYLOAD_TO_PORT=ports_payload_get_name"
+ OBJS = $(SRCS:.c=.o) $(MIGSTUBS)
++LDLIBS = -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/eth-multiplexer/Makefile b/eth-multiplexer/Makefile
+index cefa0abd..1a603577 100644
+--- a/eth-multiplexer/Makefile
++++ b/eth-multiplexer/Makefile
+@@ -27,7 +27,7 @@ device-MIGSFLAGS="-DMACH_PAYLOAD_TO_PORT=ports_payload_get_name"
+ OBJS = $(SRCS:.c=.o) $(MIGSTUBS)
+ LCLHDRS = ethernet.h util.h vdev.h netfs_impl.h
+ HURDLIBS = ports ihash iohelp fshelp shouldbeinlibc netfs bpf
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ CFLAGS += -I$(top_srcdir)/libbpf
+ 
+diff --git a/exec/Makefile b/exec/Makefile
+index 17d03e30..8a80498e 100644
+--- a/exec/Makefile
++++ b/exec/Makefile
+@@ -26,7 +26,7 @@ OBJS = main.o hostarch.o exec.o hashexec.o \
+ 
+ target = exec exec.static
+ HURDLIBS = trivfs fshelp iohelp ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ exec-MIGSFLAGS = -imacros $(srcdir)/execmutations.h
+ exec_startup-MIGSFLAGS = -imacros $(srcdir)/execmutations.h
+diff --git a/fatfs/Makefile b/fatfs/Makefile
+index ee8cd83d..154dfc37 100644
+--- a/fatfs/Makefile
++++ b/fatfs/Makefile
+@@ -23,7 +23,7 @@ SRCS = inode.c main.c dir.c pager.c fat.c virt-inode.c node-create.c
+ 
+ OBJS = $(SRCS:.c=.o)
+ HURDLIBS = diskfs iohelp fshelp store pager ports ihash shouldbeinlibc
+-LDLIBS = -lpthread $(and $(HAVE_LIBBZ2),-lbz2) $(and $(HAVE_LIBZ),-lz)
++LDLIBS = -lpthread -lhurduser -lmachuser $(and $(HAVE_LIBBZ2),-lbz2) $(and $(HAVE_LIBZ),-lz)
+ 
+ include ../Makeconf
+ 
+diff --git a/fstests/Makefile b/fstests/Makefile
+index 63742424..09279333 100644
+--- a/fstests/Makefile
++++ b/fstests/Makefile
+@@ -20,6 +20,7 @@ makemode := utilities
+ 
+ SRCS = fstests.c fdtests.c timertest.c opendisk.c
+ targets = timertest fstests # opendisk fdtests
++LDLIBS = -lhurduser -lmachuser
+ 
+ include ../Makeconf
+ 
+diff --git a/ftpfs/Makefile b/ftpfs/Makefile
+index ec8a6730..83fe1065 100644
+--- a/ftpfs/Makefile
++++ b/ftpfs/Makefile
+@@ -25,6 +25,6 @@ SRCS = ftpfs.c fs.c host.c netfs.c dir.c conn.c ccache.c node.c ncache.c
+ 
+ OBJS = $(SRCS:.c=.o)
+ HURDLIBS = netfs fshelp iohelp ports ihash ftpconn shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/hostmux/Makefile b/hostmux/Makefile
+index 4776ac9c..a75cbd7d 100644
+--- a/hostmux/Makefile
++++ b/hostmux/Makefile
+@@ -25,6 +25,6 @@ SRCS = hostmux.c mux.c leaf.c node.c stubs.c
+ 
+ OBJS = $(SRCS:.c=.o)
+ HURDLIBS = netfs fshelp iohelp ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/mach-defpager/Makefile b/mach-defpager/Makefile
+index 9bf394e7..784e53f9 100644
+--- a/mach-defpager/Makefile
++++ b/mach-defpager/Makefile
+@@ -30,7 +30,7 @@ OBJS 	:= $(SRCS:.c=.o) \
+ 	   default_pager_replyUser.o
+ 
+ HURDLIBS:= ihash shouldbeinlibc
+-LDLIBS:= -lpthread
++LDLIBS:= -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+ 
+diff --git a/nfs/Makefile b/nfs/Makefile
+index 265d0273..04c4d3e4 100644
+--- a/nfs/Makefile
++++ b/nfs/Makefile
+@@ -27,6 +27,6 @@ SRCS = ops.c rpc.c mount.c nfs.c cache.c consts.c main.c name-cache.c \
+        storage-info.c
+ OBJS = $(SRCS:.c=.o)
+ HURDLIBS = netfs fshelp iohelp ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/nfsd/Makefile b/nfsd/Makefile
+index 5dc9a4da..b1be8cf5 100644
+--- a/nfsd/Makefile
++++ b/nfsd/Makefile
+@@ -25,7 +25,7 @@ OBJS = $(subst .c,.o,$(SRCS))
+ target = nfsd
+ installationdir = $(sbindir)
+ HURDLIBS = shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+ 
+diff --git a/pci-arbiter/Makefile b/pci-arbiter/Makefile
+index 1d0309dc..f5f386c7 100644
+--- a/pci-arbiter/Makefile
++++ b/pci-arbiter/Makefile
+@@ -27,7 +27,7 @@ MIGSRCS		= pciServer.c startup_notifyServer.c
+ OBJS		= $(patsubst %.S,%.o,$(patsubst %.c,%.o, $(SRCS) $(MIGSRCS)))
+ 
+ HURDLIBS= fshelp ports shouldbeinlibc netfs iohelp ihash
+-LDLIBS = -lpthread $(libpciaccess_LIBS)
++LDLIBS = -lpthread -lhurduser -lmachuser $(libpciaccess_LIBS)
+ 
+ target = pci-arbiter
+ 
+diff --git a/pfinet/Makefile b/pfinet/Makefile
+index 74cedcf6..69ea46e0 100644
+--- a/pfinet/Makefile
++++ b/pfinet/Makefile
+@@ -115,7 +115,7 @@ ASMHEADERS = atomic.h bitops.h byteorder.h delay.h errno.h hardirq.h init.h \
+ 	segment.h spinlock.h system.h types.h uaccess.h
+ 
+ HURDLIBS=trivfs fshelp ports ihash shouldbeinlibc iohelp
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ target = pfinet
+ 
+diff --git a/pflocal/Makefile b/pflocal/Makefile
+index 0419c3ec..224a431d 100644
+--- a/pflocal/Makefile
++++ b/pflocal/Makefile
+@@ -26,7 +26,7 @@ SRCS = connq.c io.c fs.c pflocal.c socket.c pf.c sock.c sserver.c
+ MIGSTUBS = ioServer.o fsServer.o socketServer.o
+ OBJS = $(SRCS:.c=.o) $(MIGSTUBS)
+ HURDLIBS = pipe trivfs iohelp fshelp ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ MIGSFLAGS = -imacros $(srcdir)/mig-mutate.h
+ fsServer-CFLAGS = "-DMIG_EOPNOTSUPP=EOPNOTSUPP"
+diff --git a/proc/Makefile b/proc/Makefile
+index 8ca13c20..081150f2 100644
+--- a/proc/Makefile
++++ b/proc/Makefile
+@@ -31,7 +31,7 @@ MIGSTUBS = processServer.o notifyServer.o \
+ 	task_notifyServer.o
+ OBJS = $(SRCS:.c=.o) $(MIGSTUBS)
+ HURDLIBS = ihash ports shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+ 
+diff --git a/procfs/Makefile b/procfs/Makefile
+index 13ee026c..0c778a23 100644
+--- a/procfs/Makefile
++++ b/procfs/Makefile
+@@ -26,6 +26,6 @@ LCLHDRS = dircat.h main.h process.h procfs.h procfs_dir.h proclist.h rootdir.h
+ 
+ OBJS = $(SRCS:.c=.o)
+ HURDLIBS = netfs fshelp iohelp ps ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/shutdown/Makefile b/shutdown/Makefile
+index 73813dab..28ebec3e 100644
+--- a/shutdown/Makefile
++++ b/shutdown/Makefile
+@@ -20,7 +20,7 @@ makemode := server
+ 
+ SRCS = shutdown.c acpi_shutdown.c
+ HURDLIBS = ports shouldbeinlibc trivfs iohelp ihash fshelp
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ target = shutdown
+ MIGSTUBS = shutdownServer.o
+ MIGSFLAGS = -imacros $(srcdir)/mig-mutate.h
+diff --git a/startup/Makefile b/startup/Makefile
+index 8df0bd85..e3be561e 100644
+--- a/startup/Makefile
++++ b/startup/Makefile
+@@ -25,6 +25,7 @@ OBJS = $(SRCS:.c=.o) \
+        startup_notifyUser.o fsysServer.o fsServer.o ioServer.o
+ target = startup
+ HURDLIBS = shouldbeinlibc
++LDLIBS = -lhurduser -lmachuser
+ 
+ # startup does not use libports.  Disable the default payload to port
+ # conversion.
+diff --git a/storeio/Makefile b/storeio/Makefile
+index 83b7684d..bb0cea44 100644
+--- a/storeio/Makefile
++++ b/storeio/Makefile
+@@ -24,6 +24,6 @@ SRCS = dev.c storeio.c open.c pager.c io.c
+ 
+ OBJS = $(SRCS:.c=.o)
+ HURDLIBS = trivfs pager fshelp iohelp store ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/sutils/Makefile b/sutils/Makefile
+index 5bb92c0b..f12f283b 100644
+--- a/sutils/Makefile
++++ b/sutils/Makefile
+@@ -26,6 +26,7 @@ targets = $(special-targets) $(progs)
+ special-targets = $(scripts)
+ installationdir = $(sbindir)
+ SRCS = $(progs:=.c) clookup.c fstab.c update.c $(scripts:=.sh)
++LDLIBS = -lhurduser -lmachuser
+ 
+ OBJS = $(progs:=.o)
+ HURDLIBS = store shouldbeinlibc
+diff --git a/term/Makefile b/term/Makefile
+index df91c212..bd1e1170 100644
+--- a/term/Makefile
++++ b/term/Makefile
+@@ -26,7 +26,7 @@ target = term
+ SRCS = devio.c munge.c users.c main.c ptyio.c hurdio.c xinl.c
+ 
+ HURDLIBS = trivfs fshelp iohelp ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ OBJS = $(subst .c,.o,$(SRCS)) termServer.o device_replyServer.o tioctlServer.o ourmsgUser.o
+ 
+ include ../Makeconf
+diff --git a/tmpfs/Makefile b/tmpfs/Makefile
+index bcb76e9a..ed16caf7 100644
+--- a/tmpfs/Makefile
++++ b/tmpfs/Makefile
+@@ -24,6 +24,6 @@ SRCS = tmpfs.c node.c dir.c pager-stubs.c
+ OBJS = $(SRCS:.c=.o) default_pagerUser.o
+ # XXX The shared libdiskfs requires libstore even though we don't use it here.
+ HURDLIBS = diskfs pager iohelp fshelp store ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/trans/Makefile b/trans/Makefile
+index 6cf50e7a..ddeed915 100644
+--- a/trans/Makefile
++++ b/trans/Makefile
+@@ -30,7 +30,7 @@ OBJS = $(SRCS:.c=.o) fsysServer.o ifsockServer.o passwordServer.o \
+ 	default_pagerServer.o default_pagerUser.o \
+ 	device_replyServer.o elfcore.o startup_notifyServer.o
+ HURDLIBS = ports netfs trivfs iohelp fshelp pipe ihash shouldbeinlibc
+-LDLIBS += -lpthread
++LDLIBS += -lpthread -lhurduser -lmachuser
+ password-MIGSFLAGS=\
+     "-DIO_INTRAN=trivfs_protid_t trivfs_begin_using_protid (io_t)" \
+     "-DIO_INTRAN_PAYLOAD=trivfs_protid_t trivfs_begin_using_protid_payload" \
+diff --git a/usermux/Makefile b/usermux/Makefile
+index 8df24d4e..8b804c93 100644
+--- a/usermux/Makefile
++++ b/usermux/Makefile
+@@ -25,6 +25,6 @@ SRCS = usermux.c mux.c leaf.c node.c stubs.c
+ 
+ OBJS = $(SRCS:.c=.o)
+ HURDLIBS = netfs fshelp iohelp ports ihash shouldbeinlibc
+-LDLIBS = -lpthread
++LDLIBS = -lpthread -lhurduser -lmachuser
+ 
+ include ../Makeconf
+diff --git a/utils/Makefile b/utils/Makefile
+index 0cefd27b..73bfac2b 100644
+--- a/utils/Makefile
++++ b/utils/Makefile
+@@ -35,7 +35,7 @@ SRCS = shd.c ps.c settrans.c syncfs.c showtrans.c addauth.c rmauth.c \
+ 
+ OBJS = $(filter-out %.sh,$(SRCS:.c=.o))
+ HURDLIBS = ps ihash store fshelp ports ftpconn shouldbeinlibc
+-LDLIBS += -lpthread
++LDLIBS += -lpthread -lhurduser -lmachuser
+ login-LDLIBS = -lutil $(and $(HAVE_LIBCRYPT),-lcrypt)
+ addauth-LDLIBS = $(and $(HAVE_LIBCRYPT),-lcrypt)
+ setauth-LDLIBS = $(and $(HAVE_LIBCRYPT),-lcrypt)
+-- 
+2.25.4
+

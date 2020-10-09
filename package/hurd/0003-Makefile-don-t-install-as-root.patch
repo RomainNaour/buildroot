@@ -1,0 +1,46 @@
+From 7576465f107ab6aef76668b643676f9aa47fdf41 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Wed, 14 Oct 2020 23:09:19 +0200
+Subject: [PATCH] Makefile: don't install as root
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ daemons/Makefile | 2 +-
+ utils/Makefile   | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/daemons/Makefile b/daemons/Makefile
+index 6e1e6e8f..331e7724 100644
+--- a/daemons/Makefile
++++ b/daemons/Makefile
+@@ -32,7 +32,7 @@ LDLIBS += -lhurduser -lmachuser
+ OBJS = $(SRCS:.c=.o)
+ getty-LDLIBS = -lutil
+ 
+-INSTALL-mail.local-ops = -o root -m 4755
++INSTALL-mail.local-ops = -m 4755
+ 
+ include ../Makeconf
+ 
+diff --git a/utils/Makefile b/utils/Makefile
+index 73bfac2b..bef7654e 100644
+--- a/utils/Makefile
++++ b/utils/Makefile
+@@ -42,10 +42,10 @@ setauth-LDLIBS = $(and $(HAVE_LIBCRYPT),-lcrypt)
+ mount-LDLIBS = $(libblkid_LIBS)
+ mount-CPPFLAGS = $(libblkid_CFLAGS)
+ 
+-INSTALL-login-ops = -o root -m 4755
+-INSTALL-ids-ops = -o root -m 4755
+-INSTALL-ps-ops = -o root -m 4755
+-INSTALL-w-ops = -o root -m 4755
++INSTALL-login-ops = -m 4755
++INSTALL-ids-ops = -m 4755
++INSTALL-ps-ops = -m 4755
++INSTALL-w-ops = -m 4755
+ 
+ include ../Makeconf
+ 
+-- 
+2.25.4
+

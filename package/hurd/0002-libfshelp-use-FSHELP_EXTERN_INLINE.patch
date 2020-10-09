@@ -1,0 +1,44 @@
+From 186bdb1bd8844627520b4b17ca6169d4c91af531 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Wed, 14 Oct 2020 22:34:05 +0200
+Subject: [PATCH] libfshelp: use FSHELP_EXTERN_INLINE
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ libfshelp/fshelp.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/libfshelp/fshelp.h b/libfshelp/fshelp.h
+index 40d65b39..ba5ee187 100644
+--- a/libfshelp/fshelp.h
++++ b/libfshelp/fshelp.h
+@@ -256,7 +256,7 @@ struct rlock_box
+ 
+ error_t fshelp_rlock_init (struct rlock_box *box);
+ 
+-#if defined(__USE_EXTERN_INLINES) || defined(FSHELP_DEFINE_EXTERN_INLINE)
++#if defined(__USE_EXTERN_INLINES) || defined(FSHELP_EXTERN_INLINE)
+ 
+ /* Initialize the rlock_box BOX.  */
+ FSHELP_EXTERN_INLINE
+@@ -280,7 +280,7 @@ struct rlock_peropen
+ 
+ error_t fshelp_rlock_po_init (struct rlock_peropen *po);
+ 
+-#if defined(__USE_EXTERN_INLINES) || defined(FSHELP_DEFINE_EXTERN_INLINE)
++#if defined(__USE_EXTERN_INLINES) || defined(FSHELP_EXTERN_INLINE)
+ 
+ FSHELP_EXTERN_INLINE
+ error_t fshelp_rlock_po_init (struct rlock_peropen *po)
+@@ -303,7 +303,7 @@ error_t fshelp_rlock_drop_peropen (struct rlock_peropen *po);
+ /* Drop the peropen identifier */
+ error_t fshelp_rlock_po_fini (struct rlock_peropen *po);
+ 
+-#if defined(__USE_EXTERN_INLINES) || defined(FSHELP_DEFINE_EXTERN_INLINE)
++#if defined(__USE_EXTERN_INLINES) || defined(FSHELP_EXTERN_INLINE)
+ 
+ FSHELP_EXTERN_INLINE
+ error_t fshelp_rlock_po_fini (struct rlock_peropen *po)
+-- 
+2.25.4
+
