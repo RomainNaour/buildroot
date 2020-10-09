@@ -302,7 +302,7 @@ endif # BR2_CCACHE
 # According to gfortran manpage, it supports all options supported by gcc, so
 # add gfortran to the list of the program called via the Buildroot wrapper.
 # Avoid that a .br_real is symlinked a second time.
-# Also create <arch>-linux-<tool> symlinks.
+# Also create <arch>-$(TARGET_OS)-<tool> symlinks.
 define HOST_GCC_INSTALL_WRAPPER_AND_SIMPLE_SYMLINKS
 	$(Q)cd $(HOST_DIR)/bin; \
 	for i in $(GNU_TARGET_NAME)-*; do \
@@ -310,17 +310,17 @@ define HOST_GCC_INSTALL_WRAPPER_AND_SIMPLE_SYMLINKS
 		*.br_real) \
 			;; \
 		*-ar|*-ranlib|*-nm) \
-			ln -snf $$i $(ARCH)-linux$${i##$(GNU_TARGET_NAME)}; \
+			ln -snf $$i $(ARCH)-$(TARGET_OS)$${i##$(GNU_TARGET_NAME)}; \
 			;; \
 		*cc|*cc-*|*++|*++-*|*cpp|*-gfortran|*-gdc) \
 			rm -f $$i.br_real; \
 			mv $$i $$i.br_real; \
 			ln -sf toolchain-wrapper $$i; \
-			ln -sf toolchain-wrapper $(ARCH)-linux$${i##$(GNU_TARGET_NAME)}; \
-			ln -snf $$i.br_real $(ARCH)-linux$${i##$(GNU_TARGET_NAME)}.br_real; \
+			ln -sf toolchain-wrapper $(ARCH)-$(TARGET_OS)$${i##$(GNU_TARGET_NAME)}; \
+			ln -snf $$i.br_real $(ARCH)-$(TARGET_OS)$${i##$(GNU_TARGET_NAME)}.br_real; \
 			;; \
 		*) \
-			ln -snf $$i $(ARCH)-linux$${i##$(GNU_TARGET_NAME)}; \
+			ln -snf $$i $(ARCH)-$(TARGET_OS)$${i##$(GNU_TARGET_NAME)}; \
 			;; \
 		esac; \
 	done
