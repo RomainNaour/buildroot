@@ -27,6 +27,13 @@ HOST_GCC_FINAL_POST_PATCH_HOOKS += HOST_GCC_APPLY_PATCHES
 # subdirectory in the gcc sources, and build from there.
 HOST_GCC_FINAL_SUBDIR = build
 
+ifeq ($(BR2_GNU_HURD),y)
+define HOST_GCC_HURD_SYMLINK_HACK
+	ln -sf usr/include/ $(STAGING_DIR)/include
+endef
+HOST_GCC_FINAL_PRE_CONFIGURE_HOOKS += HOST_GCC_HURD_SYMLINK_HACK
+endif
+
 HOST_GCC_FINAL_PRE_CONFIGURE_HOOKS += HOST_GCC_CONFIGURE_SYMLINK
 
 # We want to always build the static variants of all the gcc libraries,
