@@ -54,10 +54,15 @@ COREUTILS_CONF_ENV = ac_cv_c_restrict=no \
 	gl_getline_needs_run_time_check=no \
 	gl_cv_have_proc_uptime=yes \
 	utils_cv_localtime_cache=no \
+	ac_cv_member_struct_stat_st_author=no \
 	PERL=missing \
 	MAKEINFO=true \
 	INSTALL_PROGRAM=$(INSTALL)
 
+# TODO: fix this properly.
+ifeq ($(BR2_GNU_HURD),y)
+COREUTILS_MAKE_ENV = LIBHURD="-lhurduser -lmachuser"
+endif
 COREUTILS_BIN_PROGS = base64 cat chgrp chmod chown cp date dd df dir echo false \
 	kill link ln ls mkdir mknod mktemp mv nice printenv pwd rm rmdir \
 	vdir sleep stty sync touch true uname join
