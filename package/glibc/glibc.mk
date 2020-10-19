@@ -159,6 +159,15 @@ ifeq ($(BR2_PACKAGE_GDB),y)
 GLIBC_LIBS_LIB += libthread_db.so.*
 endif
 
+ifeq ($(BR2_GNU_HURD),y)
+GLIBC_LIBS_LIB += libhurduser.so.* libmachuser.so.*
+
+define GLIBC_HURD_LD_SO_INSTALL_SYMLINK
+	ln -sf ld.so.1 $(TARGET_DIR)/lib/ld.so
+endef
+GLIBC_POST_INSTALL_TARGET_HOOKS += GLIBC_HURD_LD_SO_INSTALL_SYMLINK
+endif
+
 ifeq ($(BR2_PACKAGE_GLIBC_UTILS),y)
 GLIBC_TARGET_UTILS_USR_BIN = posix/getconf elf/ldd
 GLIBC_TARGET_UTILS_SBIN = elf/ldconfig
