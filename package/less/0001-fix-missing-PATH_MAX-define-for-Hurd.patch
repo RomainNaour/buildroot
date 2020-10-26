@@ -1,0 +1,27 @@
+From e3f5d3d9cc1790340b34fac132eb48dbc7c2a863 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Mon, 26 Oct 2020 19:31:17 +0100
+Subject: [PATCH] fix missing PATH_MAX define for Hurd
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ filename.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/filename.c b/filename.c
+index 9631f1c..06bebca 100644
+--- a/filename.c
++++ b/filename.c
+@@ -46,6 +46,9 @@
+ #endif
+ #endif
+ 
++#ifndef PATH_MAX
++#define PATH_MAX        4096
++#endif
+ 
+ extern int force_open;
+ extern int secure;
+-- 
+2.25.4
+
