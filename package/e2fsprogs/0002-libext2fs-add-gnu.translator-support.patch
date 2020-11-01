@@ -1,0 +1,42 @@
+From bd54f7684857590c66601e8b62c1b8479129566d Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Sat, 31 Oct 2020 22:15:51 +0100
+Subject: [PATCH] libext2fs: add gnu.translator support
+
+The support of setting (and reading) of passive translators from
+GNU/Linux has been added to the Linux kernel by the commit [1].
+The name index '10' has been reserved for GNU/Hurd.
+
+Hurd passive translators are stored as a xattr value with name "gnu.translator" [2].
+
+If "gnu.translator" xattr value has been set before calling mkfs.ext2, mkfs.ext2 will
+segfault since "gnu." is not present in ea_names[].
+
+ # mkfs.ext2 -d <target directory> -o hurd -O ext_attr rootfs.ext2 "1G"
+
+Adding "gnu." to ea_names[], allow creating ext2 filesystem for GNU/Hurd
+with passive translator already set.
+
+[1] https://git.savannah.gnu.org/cgit/hurd/hurd.git/commit/?id=a04c7bf83172faa7cb080fbe3b6c04a8415ca645
+[2] https://lists.gnu.org/archive/html/bug-hurd/2016-08/msg00075.html
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ lib/ext2fs/ext_attr.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lib/ext2fs/ext_attr.c b/lib/ext2fs/ext_attr.c
+index ed22cf25..ed69311c 100644
+--- a/lib/ext2fs/ext_attr.c
++++ b/lib/ext2fs/ext_attr.c
+@@ -336,6 +336,7 @@ struct ea_name_index {
+ 
+ /* Keep these names sorted in order of decreasing specificity. */
+ static struct ea_name_index ea_names[] = {
++	{10, "gnu."},
+ 	{3, "system.posix_acl_default"},
+ 	{2, "system.posix_acl_access"},
+ 	{8, "system.richacl"},
+-- 
+2.25.4
+
