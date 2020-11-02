@@ -106,6 +106,12 @@ GRUB2_CONF_ENV = \
 	TARGET_OBJCOPY="$(TARGET_OBJCOPY)" \
 	TARGET_STRIP="$(TARGET_CROSS)strip"
 
+# TODO: fix this properly.
+# 0030-grub-help-grub-tools-linking-with-libhurduser.patch
+ifeq ($(BR2_GNU_HURD),y)
+GRUB2_MAKE_ENV = LIBHURD="-lhurduser -lmachuser"
+endif
+
 GRUB2_CONF_OPTS = \
 	--target=$(GRUB2_TARGET) \
 	--with-platform=$(GRUB2_PLATFORM) \
