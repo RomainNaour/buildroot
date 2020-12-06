@@ -12,6 +12,7 @@ class TestSysLinuxBase(infra.basetest.BRTest):
         BR2_TOOLCHAIN_EXTERNAL_GCC_8=y
         BR2_TOOLCHAIN_EXTERNAL_HEADERS_4_14=y
         BR2_TOOLCHAIN_EXTERNAL_CUSTOM_GLIBC=y
+        BR2_TOOLCHAIN_EXTERNAL_INET_RPC=y
         BR2_TOOLCHAIN_EXTERNAL_CXX=y
         """
 
@@ -28,6 +29,7 @@ class TestSysLinuxBase(infra.basetest.BRTest):
         BR2_TOOLCHAIN_EXTERNAL_CXX=y
         BR2_TOOLCHAIN_EXTERNAL_HAS_SSP=y
         BR2_TOOLCHAIN_EXTERNAL_CUSTOM_GLIBC=y
+        BR2_TOOLCHAIN_EXTERNAL_INET_RPC=y
         """
 
     syslinux_legacy_config = \
