@@ -1,0 +1,126 @@
+From b168450de521198537d59c017d85270184e5da08 Mon Sep 17 00:00:00 2001
+From: Romain Naour <romain.naour@gmail.com>
+Date: Mon, 16 May 2022 23:13:05 +0200
+Subject: [PATCH] define RLIMIT_RTTIME, bump RLIMIT_NLIMITS
+
+This macro exists since Linux 2.6.25 [1] and is defined in glibc
+since 2.14 [2] for sparc and most supported architectures.
+
+RLIMIT_RTTIME has been added later for mips [3] and alpha [4].
+
+For example, RLIMIT_RTTIME is needed to build qemu 7.0.0 with
+Linux user-land emulation support [5].
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=78f2c7db6068fd6ef75b8c120f04a388848eacb5
+[2] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=67f86a251e0d36107fe28999281d46e76941c7b9
+[3] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=8969f4df1a526aa60dd0bc1c4736cf02104d4a05
+[4] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=53c2cb7641bd866398156625ef672bbd2d78a0d8
+[5] https://git.qemu.org/?p=qemu.git;a=commitdiff;h=244fd08323088db73590ff2317dfe86f810b51d7
+
+Signed-off-by: Romain Naour <romain.naour@gmail.com>
+---
+ libc/sysdeps/linux/alpha/bits/resource.h   | 8 +++++++-
+ libc/sysdeps/linux/common/bits/resource.h  | 8 +++++++-
+ libc/sysdeps/linux/mips/bits/resource.h    | 8 +++++++-
+ libc/sysdeps/linux/sparc/bits/resource.h   | 8 +++++++-
+ libc/sysdeps/linux/sparc64/bits/resource.h | 8 +++++++-
+ 5 files changed, 35 insertions(+), 5 deletions(-)
+
+diff --git a/libc/sysdeps/linux/alpha/bits/resource.h b/libc/sysdeps/linux/alpha/bits/resource.h
+index 74f4eed69..78b790d86 100644
+--- a/libc/sysdeps/linux/alpha/bits/resource.h
++++ b/libc/sysdeps/linux/alpha/bits/resource.h
+@@ -99,7 +99,13 @@ enum __rlimit_resource
+   __RLIMIT_RTPRIO = 14,
+ #define RLIMIT_RTPRIO __RLIMIT_RTPRIO
+ 
+-  __RLIMIT_NLIMITS = 15,
++  /* Maximum CPU time in µs that a process scheduled under a real-time
++     scheduling policy may consume without making a blocking system
++     call before being forcibly descheduled.  */
++  __RLIMIT_RTTIME = 15,
++#define RLIMIT_RTTIME __RLIMIT_RTTIME
++
++  __RLIMIT_NLIMITS = 16,
+   __RLIM_NLIMITS = __RLIMIT_NLIMITS
+ #define RLIMIT_NLIMITS __RLIMIT_NLIMITS
+ #define RLIM_NLIMITS __RLIM_NLIMITS
+diff --git a/libc/sysdeps/linux/common/bits/resource.h b/libc/sysdeps/linux/common/bits/resource.h
+index df0ba56d9..92b67eb23 100644
+--- a/libc/sysdeps/linux/common/bits/resource.h
++++ b/libc/sysdeps/linux/common/bits/resource.h
+@@ -99,7 +99,13 @@ enum __rlimit_resource
+   __RLIMIT_RTPRIO = 14,
+ #define RLIMIT_RTPRIO __RLIMIT_RTPRIO
+ 
+-  __RLIMIT_NLIMITS = 15,
++  /* Maximum CPU time in µs that a process scheduled under a real-time
++     scheduling policy may consume without making a blocking system
++     call before being forcibly descheduled.  */
++  __RLIMIT_RTTIME = 15,
++#define RLIMIT_RTTIME __RLIMIT_RTTIME
++
++  __RLIMIT_NLIMITS = 16,
+   __RLIM_NLIMITS = __RLIMIT_NLIMITS
+ #define RLIMIT_NLIMITS __RLIMIT_NLIMITS
+ #define RLIM_NLIMITS __RLIM_NLIMITS
+diff --git a/libc/sysdeps/linux/mips/bits/resource.h b/libc/sysdeps/linux/mips/bits/resource.h
+index b204aefd6..48a97f62e 100644
+--- a/libc/sysdeps/linux/mips/bits/resource.h
++++ b/libc/sysdeps/linux/mips/bits/resource.h
+@@ -99,7 +99,13 @@ enum __rlimit_resource
+   __RLIMIT_RTPRIO = 14,
+ #define RLIMIT_RTPRIO __RLIMIT_RTPRIO
+ 
+-  __RLIMIT_NLIMITS = 15,
++  /* Maximum CPU time in µs that a process scheduled under a real-time
++     scheduling policy may consume without making a blocking system
++     call before being forcibly descheduled.  */
++  __RLIMIT_RTTIME = 15,
++#define RLIMIT_RTTIME __RLIMIT_RTTIME
++
++  __RLIMIT_NLIMITS = 16,
+   __RLIM_NLIMITS = __RLIMIT_NLIMITS
+ #define RLIMIT_NLIMITS __RLIMIT_NLIMITS
+ #define RLIM_NLIMITS __RLIM_NLIMITS
+diff --git a/libc/sysdeps/linux/sparc/bits/resource.h b/libc/sysdeps/linux/sparc/bits/resource.h
+index 1005aeced..9bff26d00 100644
+--- a/libc/sysdeps/linux/sparc/bits/resource.h
++++ b/libc/sysdeps/linux/sparc/bits/resource.h
+@@ -98,7 +98,13 @@ enum __rlimit_resource
+   __RLIMIT_RTPRIO = 14,
+ #define RLIMIT_RTPRIO __RLIMIT_RTPRIO
+ 
+-  __RLIMIT_NLIMITS = 15,
++  /* Maximum CPU time in µs that a process scheduled under a real-time
++     scheduling policy may consume without making a blocking system
++     call before being forcibly descheduled.  */
++  __RLIMIT_RTTIME = 15,
++#define RLIMIT_RTTIME __RLIMIT_RTTIME
++
++  __RLIMIT_NLIMITS = 16,
+   __RLIM_NLIMITS = __RLIMIT_NLIMITS
+ #define RLIMIT_NLIMITS __RLIMIT_NLIMITS
+ #define RLIM_NLIMITS __RLIM_NLIMITS
+diff --git a/libc/sysdeps/linux/sparc64/bits/resource.h b/libc/sysdeps/linux/sparc64/bits/resource.h
+index 366e5c2d9..255fb9734 100644
+--- a/libc/sysdeps/linux/sparc64/bits/resource.h
++++ b/libc/sysdeps/linux/sparc64/bits/resource.h
+@@ -98,7 +98,13 @@ enum __rlimit_resource
+   __RLIMIT_RTPRIO = 14,
+ #define RLIMIT_RTPRIO __RLIMIT_RTPRIO
+ 
+-  __RLIMIT_NLIMITS = 15,
++  /* Maximum CPU time in µs that a process scheduled under a real-time
++     scheduling policy may consume without making a blocking system
++     call before being forcibly descheduled.  */
++  __RLIMIT_RTTIME = 15,
++#define RLIMIT_RTTIME __RLIMIT_RTTIME
++
++  __RLIMIT_NLIMITS = 16,
+   __RLIM_NLIMITS = __RLIMIT_NLIMITS
+ #define RLIMIT_NLIMITS __RLIMIT_NLIMITS
+ #define RLIM_NLIMITS __RLIM_NLIMITS
+-- 
+2.35.3
+
