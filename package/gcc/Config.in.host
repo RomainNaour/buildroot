@@ -153,3 +153,6 @@ config BR2_GCC_ENABLE_GRAPHITE
 
 comment "graphite support needs gcc >= 5.x"
 	depends on !BR2_TOOLCHAIN_GCC_AT_LEAST_5
+
+config BR2_GCC_VERSION_SNAPSHOT
+	bool
